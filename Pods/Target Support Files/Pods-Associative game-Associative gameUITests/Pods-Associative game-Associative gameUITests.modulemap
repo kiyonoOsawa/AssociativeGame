@@ -1,0 +1,6 @@
+framework module Pods_Associative_game_Associative_gameUITests {
+  umbrella header "Pods-Associative game-Associative gameUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}
