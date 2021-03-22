@@ -74,9 +74,9 @@ class BananaViewController: UIViewController,UITableViewDataSource,UITextFieldDe
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         //tableviewの高さを変える
         savetableview.rowHeight = 90
-        
         savetableview.dataSource = self
         //アイコンの大きさを変える
         for item in (self.tabBarController?.tabBar.items)! {

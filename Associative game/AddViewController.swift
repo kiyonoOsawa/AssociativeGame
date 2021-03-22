@@ -6,10 +6,13 @@
 //
 
 import UIKit
+import RealmSwift
 
 class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate {
     
     @IBOutlet var addtableview: UITableView!
+    var contentList: Results<Item>!
+    let realm = try! Realm()
     
     @IBAction func backbutton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -30,6 +33,18 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                 style: .default,
                 handler: {(action) -> Void in
                     self.hello(action.title!)
+                    //textfieldを保存
+                    if alert.textFields![0].text != ""{
+                        let item = Item()
+                        item.contentList = alert.textFields![0].text
+                        let realm = try! Realm()
+                        
+                        try! realm.write {
+                            realm.add(item)
+                        }
+                        self.contentList = realm.objects(Item.self)
+                        self.addtableview.reloadData()
+                    }
                 })
         )
         alert.addAction(
@@ -51,14 +66,21 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         print(msg)
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //データの取得
+        self.contentList = realm.objects(Item.self)
+        addtableview.reloadData()
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
+        return contentList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         
-        cell?.textLabel?.text = "テスト"
+        cell?.textLabel?.text = contentList[indexPath.row].contentList
         
         return cell!
     }

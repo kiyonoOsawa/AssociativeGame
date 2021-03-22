@@ -27,6 +27,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="6Nq-wD-7Y9" kind="presentation" identifier="showAddSegue" id="BFX-33-ROd"/>
+                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
@@ -76,14 +79,14 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dXm-mn-qhC">
-                                <rect key="frame" x="20" y="96" width="374" height="800"/>
+                                <rect key="frame" x="20" y="132" width="374" height="764"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="90" id="OTy-VY-BNl">
-                                        <rect key="frame" x="0.0" y="28" width="374" height="90"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="OTy-VY-BNl">
+                                        <rect key="frame" x="0.0" y="28" width="374" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="OTy-VY-BNl" id="DJ2-ML-n9b">
-                                            <rect key="frame" x="0.0" y="0.0" width="374" height="90"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -101,10 +104,10 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XXm-4X-QML">
-                                <rect key="frame" x="364" y="54" width="30" height="36"/>
+                                <rect key="frame" x="364" y="86" width="30" height="36"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="OYq-qj-qPe"/>
-                                    <constraint firstAttribute="width" constant="30" id="dRb-ZC-aAF"/>
+                                    <constraint firstAttribute="width" constant="30" id="BJB-rC-8Um"/>
+                                    <constraint firstAttribute="height" constant="36" id="xvm-Xu-mVI"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="20"/>
                                 <state key="normal" title="×">
@@ -119,13 +122,13 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="PO5-Hx-VOg" firstAttribute="bottom" secondItem="ooY-Ih-Yis" secondAttribute="bottom" constant="30" id="1UD-83-jfe"/>
-                            <constraint firstItem="XXm-4X-QML" firstAttribute="trailing" secondItem="dXm-mn-qhC" secondAttribute="trailing" id="2Qq-rE-NCJ"/>
-                            <constraint firstItem="dXm-mn-qhC" firstAttribute="leading" secondItem="PO5-Hx-VOg" secondAttribute="leading" constant="20" id="MWw-5R-cJj"/>
-                            <constraint firstItem="PO5-Hx-VOg" firstAttribute="trailing" secondItem="dXm-mn-qhC" secondAttribute="trailing" constant="20" id="Qdz-Lv-siw"/>
+                            <constraint firstItem="PO5-Hx-VOg" firstAttribute="trailing" secondItem="dXm-mn-qhC" secondAttribute="trailing" constant="20" id="9Lk-gQ-hIC"/>
+                            <constraint firstItem="XXm-4X-QML" firstAttribute="top" secondItem="PO5-Hx-VOg" secondAttribute="top" constant="42" id="BLC-C3-Xrw"/>
+                            <constraint firstItem="PO5-Hx-VOg" firstAttribute="trailing" secondItem="XXm-4X-QML" secondAttribute="trailing" constant="20" id="CbI-nu-2r0"/>
                             <constraint firstItem="PO5-Hx-VOg" firstAttribute="trailing" secondItem="ooY-Ih-Yis" secondAttribute="trailing" constant="25" id="e1Z-fD-fFg"/>
-                            <constraint firstAttribute="bottom" secondItem="dXm-mn-qhC" secondAttribute="bottom" id="moJ-gv-TVb"/>
-                            <constraint firstItem="dXm-mn-qhC" firstAttribute="top" secondItem="XXm-4X-QML" secondAttribute="bottom" constant="6" id="ukn-mn-Df5"/>
-                            <constraint firstItem="XXm-4X-QML" firstAttribute="top" secondItem="PO5-Hx-VOg" secondAttribute="top" constant="10" id="w2R-ze-e6u"/>
+                            <constraint firstAttribute="bottom" secondItem="dXm-mn-qhC" secondAttribute="bottom" id="fKH-vW-yhH"/>
+                            <constraint firstItem="dXm-mn-qhC" firstAttribute="leading" secondItem="PO5-Hx-VOg" secondAttribute="leading" constant="20" id="hrl-5d-zbr"/>
+                            <constraint firstItem="dXm-mn-qhC" firstAttribute="top" secondItem="XXm-4X-QML" secondAttribute="bottom" constant="10" id="wxf-bn-LtR"/>
                         </constraints>
                     </view>
                     <connections>
