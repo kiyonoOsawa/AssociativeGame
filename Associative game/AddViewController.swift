@@ -13,16 +13,17 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     @IBOutlet var addtableview: UITableView!
     var contentList: Results<Item>!
     let realm = try! Realm()
+    var savedTitle: String?
+    let saveData: UserDefaults = UserDefaults.standard
     
     @IBAction func backbutton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func aleat(_ sender: Any) {
-        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        alert.title = "入力"
-        alert.message = "追加"
+        alert.title = "新しいアイディア"
+        alert.message = "入力"
         alert.addTextField(configurationHandler: {(textField) -> Void in
             textField.delegate = self
         })
@@ -35,16 +36,31 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                     self.hello(action.title!)
                     //textfieldを保存
                     if alert.textFields![0].text != ""{
-                        let item = Item()
-                        item.contentList = alert.textFields![0].text
+                        /*
+                        let contents = Contents()
+                        contents.content = alert.textFields![0].text
                         let realm = try! Realm()
+                        let itemname = realm.objects(Item.self).filter("title == '\(self.savedTitle)'").first
+                        
+                        let contentlist = Contents()
+                        contentlist.content = alert.textFields![0].text
+                        print(alert.textFields![0].text)
+                        try! realm.write{
+                            itemname?.contents.append(contentlist)
+                        }
                         
                         try! realm.write {
-                            realm.add(item)
+                            realm.add(contents)
                         }
-                        self.contentList = realm.objects(Item.self)
+                        
+                        let results = realm.objects(Item.self)
+                        print("保存後")
+                        print(results)
+ */
+                        //                        self.contents = realm.objects(Item.self)
                         self.addtableview.reloadData()
                     }
+                    
                 })
         )
         alert.addAction(
@@ -80,7 +96,8 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         
-        cell?.textLabel?.text = contentList[indexPath.row].contentList
+        //        cell?.textLabel?.text = contentList[indexPath.row].contents
+        cell?.textLabel?.text = "テスト"
         
         return cell!
     }
@@ -89,6 +106,27 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         
         addtableview.rowHeight = 90
         addtableview.dataSource = self
+        savedTitle = (saveData.object(forKey: "Title") as! String)
+        print(savedTitle)
+
+        let contents = Contents()
+        let realm = try! Realm()
+        let itemname = realm.objects(Item.self).filter("title == '\(self.savedTitle)'").first
+        
+        let contentlist = Contents()
+        contentlist.content = "適当"
+        try! realm.write{
+            itemname?.contents.append(contentlist)
+        }
+        
+        try! realm.write {
+            realm.add(contents)
+        }
+        
+        let results = realm.objects(Item.self)
+        print("保存後")
+        print(results)
+        
     }
     /*
      // MARK: - Navigation
