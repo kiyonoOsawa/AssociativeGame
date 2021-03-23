@@ -15,9 +15,10 @@ class BananaViewController: UIViewController,UITableViewDataSource,UITextFieldDe
     var itemList: Results<Item>!
     var maxId: Int{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? 0}
     let realm = try! Realm()
+    let saveData: UserDefaults = UserDefaults.standard
+    var savedTitle: String?
     
     @IBAction func aleat(_ sender: Any) {
-        
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         let textField = UITextField()
         alert.title = "新規作成"
@@ -102,7 +103,12 @@ class BananaViewController: UIViewController,UITableViewDataSource,UITextFieldDe
         
         cell?.textLabel?.text = itemList[indexPath.row].title
         
+        saveData.set(itemList[indexPath.row].title, forKey: "Title")
+        
         return cell!
+
+//        savedTitle = saveData.object(forKey: "Title") as! String
+//        print(savedTitle)
     }
     
     func tableview(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
