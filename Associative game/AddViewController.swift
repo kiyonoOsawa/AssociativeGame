@@ -11,10 +11,26 @@ import RealmSwift
 class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate {
     
     @IBOutlet var addtableview: UITableView!
-    var contentList: Results<Item>!
+    var contentList: Results<Contents>!
     let realm = try! Realm()
-    var savedTitle: String?
-    let saveData: UserDefaults = UserDefaults.standard
+    var savedTitle: String!
+    var contentsArray = Array<Any>()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        print("値渡し\(savedTitle) in viewdidload")
+        addtableview.rowHeight = 90
+        addtableview.dataSource = self
+//        savedTitle = (saveData.object(forKey: "Title") as! String)
+        let realm = try! Realm()
+
+
+        let results = realm.objects(Contents.self)
+        print("保存後")
+        print(results)
+        
+    }
     
     @IBAction func backbutton(_ sender: Any) {
         self.dismiss(animated: true, completion: nil)
@@ -35,29 +51,21 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                 handler: {(action) -> Void in
                     self.hello(action.title!)
                     //textfieldを保存
-                    if alert.textFields![0].text != ""{
-                        /*
+                    if alert.textFields![0].text != "" {
                         let contents = Contents()
+                        contents.title = self.savedTitle
                         contents.content = alert.textFields![0].text
                         let realm = try! Realm()
-                        let itemname = realm.objects(Item.self).filter("title == '\(self.savedTitle)'").first
-                        
-                        let contentlist = Contents()
-                        contentlist.content = alert.textFields![0].text
-                        print(alert.textFields![0].text)
-                        try! realm.write{
-                            itemname?.contents.append(contentlist)
-                        }
-                        
+
                         try! realm.write {
                             realm.add(contents)
+//                            realm.add(contentlist)
                         }
-                        
-                        let results = realm.objects(Item.self)
-                        print("保存後")
-                        print(results)
- */
-                        //                        self.contents = realm.objects(Item.self)
+                        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedTitle!)'")
+//
+                        print("中身")
+                        print(self.contentList)
+//                        self.contentList = realm.objects(Contents.self).filter("title == 'f'")
                         self.addtableview.reloadData()
                     }
                     
@@ -85,7 +93,12 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //データの取得
-        self.contentList = realm.objects(Item.self)
+        let results = realm.objects(Item.self)
+        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedTitle!)'")
+//        self.contentList = realm.objects(Contents.self).filter("title == ''")
+        print("中身")
+        print(contentList)
+        
         addtableview.reloadData()
     }
     
@@ -95,39 +108,11 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        
-        //        cell?.textLabel?.text = contentList[indexPath.row].contents
-        cell?.textLabel?.text = "テスト"
-        
+    
+        cell?.textLabel?.text = contentList[indexPath.row].content
         return cell!
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        addtableview.rowHeight = 90
-        addtableview.dataSource = self
-        savedTitle = (saveData.object(forKey: "Title") as! String)
-        print(savedTitle)
 
-        let contents = Contents()
-        let realm = try! Realm()
-        let itemname = realm.objects(Item.self).filter("title == '\(self.savedTitle)'").first
-        
-        let contentlist = Contents()
-        contentlist.content = "適当"
-        try! realm.write{
-            itemname?.contents.append(contentlist)
-        }
-        
-        try! realm.write {
-            realm.add(contents)
-        }
-        
-        let results = realm.objects(Item.self)
-        print("保存後")
-        print(results)
-        
-    }
     /*
      // MARK: - Navigation
      

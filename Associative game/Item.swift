@@ -12,7 +12,7 @@ class Item: Object {
     
     @objc dynamic var id: Int = 0
     @objc dynamic var title: String? = nil
-    let contents = List<Contents> ()
+//    let contents = List<Contents> ()
     
     override static func primaryKey() -> String? {
         return "id"
@@ -25,5 +25,6 @@ class Item: Object {
 
 class Contents: Object {
     
+    @objc dynamic var title: String? = nil
     @objc dynamic var content: String? = nil
 }

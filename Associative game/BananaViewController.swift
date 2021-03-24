@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class BananaViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate {
+class BananaViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate {
     
     @IBOutlet var newbutton: UIButton!
     @IBOutlet var savetableview: UITableView!
@@ -16,7 +16,7 @@ class BananaViewController: UIViewController,UITableViewDataSource,UITextFieldDe
     var maxId: Int{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? 0}
     let realm = try! Realm()
     let saveData: UserDefaults = UserDefaults.standard
-    var savedTitle: String?
+    var savedTitle: String!
     
     @IBAction func aleat(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
@@ -78,6 +78,7 @@ class BananaViewController: UIViewController,UITableViewDataSource,UITextFieldDe
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         //tableviewの高さを変える
         savetableview.rowHeight = 90
+        savetableview.delegate = self
         savetableview.dataSource = self
         //アイコンの大きさを変える
         for item in (self.tabBarController?.tabBar.items)! {
@@ -103,21 +104,36 @@ class BananaViewController: UIViewController,UITableViewDataSource,UITextFieldDe
         
         cell?.textLabel?.text = itemList[indexPath.row].title
         
-        saveData.set(itemList[indexPath.row].title, forKey: "Title")
+        print(itemList[indexPath.row].title)
+        //        saveData.set(itemList[indexPath.row].title, forKey: "Title")
         
         return cell!
-
-//        savedTitle = saveData.object(forKey: "Title") as! String
-//        print(savedTitle)
     }
     
-    func tableview(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
+        //                vc.savedTitle = itemList[indexPath.row].title
+        //                print("タイトル\(itemList[indexPath.row].title)")
         if itemList.count != 0 {
+            savedTitle = itemList[indexPath.row].title!
+            print("タイトル\(savedTitle!)")
+//            performSegue(withIdentifier: "showAddSegue", sender: nil)
+            print("タイトル\(itemList[indexPath.row].title)")
+            vc.savedTitle = itemList[indexPath.row].title!
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }
+    
+    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    //        if segue.identifier == "showAddSegue" {
+    //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+    //            let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
+    //            vc.savedTitle = savedTitle!
+    //            print("vc: \(vc.savedTitle)")
+    //        }
+    //
+    //    }
     
     /*
      // MARK: - Navigation
