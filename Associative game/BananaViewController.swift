@@ -8,14 +8,15 @@
 import UIKit
 import RealmSwift
 
-class BananaViewController: UIViewController,UITableViewDataSource,UITableViewDelegate,UITextFieldDelegate {
+class BananaViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
     
     @IBOutlet var newbutton: UIButton!
     @IBOutlet var savetableview: UITableView!
     var itemList: Results<Item>!
+    var contentList: Results<Contents>!
     var maxId: Int{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? 0}
     let realm = try! Realm()
-    let saveData: UserDefaults = UserDefaults.standard
+    //    let saveData: UserDefaults = UserDefaults.standard
     var savedTitle: String!
     
     @IBAction func aleat(_ sender: Any) {
@@ -92,8 +93,29 @@ class BananaViewController: UIViewController,UITableViewDataSource,UITableViewDe
         super.viewWillAppear(animated)
         //データの取得
         self.itemList = realm.objects(Item.self)
+        self.contentList = realm.objects(Contents.self)
         savetableview.reloadData()
     }
+    // セルの編集許可
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+//    // スワイプしたセルを削除
+//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+//        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
+//            let realm = try! Realm()
+//            let deletecontent = realm.objects(Item.self).filter("title == '\(self.itemList[indexPath.row].title)' && id == '\(self.itemList[indexPath.row].title)'")
+//            try! realm .write {
+//                print(self.itemList[indexPath.row].title)
+//                realm.delete(deletecontent)
+//                print(self.itemList[indexPath.row].title)
+//                self.savetableview.reloadData()
+//            }
+////            self.itemList[indexPath.row].title.remove(at: indexPath.row)
+//            self.savetableview.deleteRows(at: [indexPath], with: .automatic)
+//        }
+//        return [delete]
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
@@ -118,7 +140,6 @@ class BananaViewController: UIViewController,UITableViewDataSource,UITableViewDe
         if itemList.count != 0 {
             savedTitle = itemList[indexPath.row].title!
             print("タイトル\(savedTitle!)")
-//            performSegue(withIdentifier: "showAddSegue", sender: nil)
             print("タイトル\(itemList[indexPath.row].title)")
             vc.savedTitle = itemList[indexPath.row].title!
             self.navigationController?.pushViewController(vc, animated: true)

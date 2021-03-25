@@ -20,11 +20,11 @@
                                 <rect key="frame" x="20" y="248" width="374" height="524"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="2hz-gu-wpu">
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="2hz-gu-wpu">
                                         <rect key="frame" x="0.0" y="28" width="374" height="70"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="2hz-gu-wpu" id="6Xr-wo-xgO">
-                                            <rect key="frame" x="0.0" y="0.0" width="343" height="70"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="374" height="70"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -57,11 +57,10 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="banana" image="banana" selectedImage="banana" id="uhC-9f-L4X"/>
-                    <navigationItem key="navigationItem" id="kJI-Xm-MiJ"/>
                     <connections>
                         <outlet property="newbutton" destination="lNB-bz-Vle" id="iGK-X8-YY2"/>
                         <outlet property="savetableview" destination="NuH-Bk-GLD" id="AEQ-CH-qR2"/>
-                        <segue destination="6Nq-wD-7Y9" kind="push" identifier="showAddSegue" id="7vy-93-b1u"/>
+                        <segue destination="6Nq-wD-7Y9" kind="custom" id="5bL-IS-0uE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -77,7 +76,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dXm-mn-qhC">
-                                <rect key="frame" x="20" y="176" width="374" height="720"/>
+                                <rect key="frame" x="20" y="132" width="374" height="764"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="OTy-VY-BNl">
@@ -129,7 +128,6 @@
                             <constraint firstItem="dXm-mn-qhC" firstAttribute="top" secondItem="XXm-4X-QML" secondAttribute="bottom" constant="10" id="wxf-bn-LtR"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="2BT-dK-gQH"/>
                     <connections>
                         <outlet property="addtableview" destination="dXm-mn-qhC" id="8zb-og-7f4"/>
                     </connections>
