@@ -13,14 +13,14 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     @IBOutlet var addtableview: UITableView!
     var contentList: Results<Contents>!
     let realm = try! Realm()
-    var savedTitle: String!
+    var savedItem: Item!
     var contentsArray = Array<Any>()
     
     override func viewDidLoad() {
         self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
         super.viewDidLoad()
         
-        print("値渡し\(savedTitle) in viewdidload")
+        print("値渡し\(savedItem) in viewdidload")
         addtableview.rowHeight = 90
         addtableview.dataSource = self
         addtableview.delegate = self
@@ -51,15 +51,15 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                     //textfieldを保存
                     if alert.textFields![0].text != "" {
                         let contents = Contents()
-                        contents.title = self.savedTitle
+                        contents.title = self.savedItem.title
                         contents.content = alert.textFields![0].text
                         let realm = try! Realm()
-                        
+                                            
                         try! realm.write {
-                            realm.add(contents)
-                            //                            realm.add(contentlist)
+//                            realm.add(savedItem)
+                            self.savedItem.contents.append(contents)
                         }
-                        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedTitle!)'")
+                        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
                         self.addtableview.reloadData()
                     }
                     
@@ -88,7 +88,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         super.viewWillAppear(animated)
         //データの取得
         let results = realm.objects(Item.self)
-        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedTitle!)'")
+        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
         //        self.contentList = realm.objects(Contents.self).filter("title == ''")
         print("中身")
         print(contentList)

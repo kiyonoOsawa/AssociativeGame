@@ -16,7 +16,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     var contentList: Results<Contents>!
     var maxId: String{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? ""}
     let realm = try! Realm()
-    var savedTitle: String!
+    var savedItem: Item!
     
     //    @IBAction func aleat(_ sender: Any) {
     //        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
@@ -140,10 +140,10 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
         if itemList.count != 0 {
-            savedTitle = itemList[indexPath.row].title!
-            print("タイトル\(savedTitle!)")
+            savedItem = itemList[indexPath.row]
+            print("タイトル\(savedItem!)")
             print("タイトル\(itemList[indexPath.row].title)")
-            vc.savedTitle = itemList[indexPath.row].title!
+            vc.savedItem = itemList[indexPath.row]
             self.navigationController?.pushViewController(vc, animated: true)
         }
     }

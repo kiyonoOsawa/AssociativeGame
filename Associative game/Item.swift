@@ -13,19 +13,18 @@ class Item: Object {
     @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var title: String? = nil
     @objc dynamic var timer: Bool = false
-//    let contents = List<Contents> ()
+    let contents = List<Contents>()
     
     override static func primaryKey() -> String? {
         return "id"
     }
     override static func indexedProperties() -> [String] {
-        return ["id", "title"]
+        return ["id", "title","timer"]
     }
-    
 }
 
 class Contents: Object {
-    
+    // class Peace
     @objc dynamic var title: String? = nil
     @objc dynamic var content: String? = nil
 }
