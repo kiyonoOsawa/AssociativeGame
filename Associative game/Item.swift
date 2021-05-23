@@ -10,8 +10,9 @@ import RealmSwift
 
 class Item: Object {
     
-    @objc dynamic var id: Int = 0
+    @objc dynamic var id: String = UUID().uuidString
     @objc dynamic var title: String? = nil
+    @objc dynamic var timer: Bool = false
 //    let contents = List<Contents> ()
     
     override static func primaryKey() -> String? {

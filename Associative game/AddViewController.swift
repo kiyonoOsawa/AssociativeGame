@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate {
+class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate, UITableViewDelegate {
     
     @IBOutlet var addtableview: UITableView!
     var contentList: Results<Contents>!
@@ -17,23 +17,21 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     var contentsArray = Array<Any>()
     
     override func viewDidLoad() {
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
         super.viewDidLoad()
         
         print("値渡し\(savedTitle) in viewdidload")
         addtableview.rowHeight = 90
         addtableview.dataSource = self
-//        savedTitle = (saveData.object(forKey: "Title") as! String)
+        addtableview.delegate = self
+        //        savedTitle = (saveData.object(forKey: "Title") as! String)
         let realm = try! Realm()
-
-
+        
+        
         let results = realm.objects(Contents.self)
         print("保存後")
         print(results)
         
-    }
-    
-    @IBAction func backbutton(_ sender: Any) {
-        self.dismiss(animated: true, completion: nil)
     }
     
     @IBAction func aleat(_ sender: Any) {
@@ -56,16 +54,12 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                         contents.title = self.savedTitle
                         contents.content = alert.textFields![0].text
                         let realm = try! Realm()
-
+                        
                         try! realm.write {
                             realm.add(contents)
-//                            realm.add(contentlist)
+                            //                            realm.add(contentlist)
                         }
                         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedTitle!)'")
-//
-                        print("中身")
-                        print(self.contentList)
-//                        self.contentList = realm.objects(Contents.self).filter("title == 'f'")
                         self.addtableview.reloadData()
                     }
                     
@@ -95,7 +89,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         //データの取得
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedTitle!)'")
-//        self.contentList = realm.objects(Contents.self).filter("title == ''")
+        //        self.contentList = realm.objects(Contents.self).filter("title == ''")
         print("中身")
         print(contentList)
         
@@ -108,11 +102,31 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-    
+        
         cell?.textLabel?.text = contentList[indexPath.row].content
         return cell!
     }
-
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            do{
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.delete(self.contentList[indexPath.row])
+                }
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+            }catch{
+            }
+            tableView.reloadData()
+        }
+    }
+    
+    
     /*
      // MARK: - Navigation
      

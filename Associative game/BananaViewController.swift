@@ -14,67 +14,74 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     @IBOutlet var savetableview: UITableView!
     var itemList: Results<Item>!
     var contentList: Results<Contents>!
-    var maxId: Int{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? 0}
+    var maxId: String{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? ""}
     let realm = try! Realm()
-    //    let saveData: UserDefaults = UserDefaults.standard
     var savedTitle: String!
     
-    @IBAction func aleat(_ sender: Any) {
-        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-        let textField = UITextField()
-        alert.title = "新規作成"
-        alert.message = "タイトルを入力"
-        alert.addTextField(configurationHandler: {(textField) -> Void in
-            textField.delegate = self
-            
-        })
-        
-        //追加ボタン
-        alert.addAction(
-            UIAlertAction(
-                title: "追加",
-                style: .default,
-                handler: {(action) -> Void in
-                    self.hello(action.title!)
-                    //textfieldでItemを保存
-                    if alert.textFields![0].text != "" {
-                        let item = Item()
-                        item.title = alert.textFields![0].text
-                        item.id = self.maxId + 1
-                        let realm = try! Realm()
-                        
-                        try! realm.write {
-                            realm.add(item)
-                        }
-                        self.itemList = realm.objects(Item.self)
-                        self.savetableview.reloadData()
-                    }
-                })
-        )
-        //キャンセルボタン
-        alert.addAction(
-            UIAlertAction(
-                title: "キャンセル",
-                style: .cancel,
-                handler: {(action) -> Void in
-                    self.hello(action.title!)
-                })
-        )
-        //アラートが表示されるごとにprint
-        self.present(
-            alert,
-            animated: true,
-            completion: {
-                print("アラートが表示された")
-            })
-    }
-    
-    func hello(_ msg:String){
-        print(msg)
-    }
+    //    @IBAction func aleat(_ sender: Any) {
+    //        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+    //        let textField = UITextField()
+    //        alert.title = "新規作成"
+    //        alert.message = "タイトルを入力"
+    //        alert.addTextField(configurationHandler: {(textField) -> Void in
+    //            textField.delegate = self
+    //
+    //        })
+    //
+    //        //追加ボタン
+    //        alert.addAction(
+    //            UIAlertAction(
+    //                title: "追加",
+    //                style: .default,
+    //                handler: {(action) -> Void in
+    //                    self.hello(action.title!)
+    //                    //textfieldでItemを保存
+    //                    if alert.textFields![0].text != "" {
+    //                        let item = Item()
+    //                        item.title = alert.textFields![0].text
+    //                        item.id = self.maxId + 1
+    //                        let realm = try! Realm()
+    //
+    //                        try! realm.write {
+    //                            realm.add(item)
+    //                        }
+    //                        self.itemList = realm.objects(Item.self)
+    //                        self.savetableview.reloadData()
+    //                    }
+    //                })
+    //        )
+    //        //キャンセルボタン
+    //        alert.addAction(
+    //            UIAlertAction(
+    //                title: "キャンセル",
+    //                style: .cancel,
+    //                handler: {(action) -> Void in
+    //                    self.hello(action.title!)
+    //                })
+    //        )
+    //        //アラートが表示されるごとにprint
+    //        self.present(
+    //            alert,
+    //            animated: true,
+    //            completion: {
+    //                print("アラートが表示された")
+    //            })
+    //    }
+    //
+    //    func hello(_ msg:String){
+    //        print(msg)
+    //    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        do{
+            let realm = try Realm()
+            itemList = realm.objects(Item.self)
+            savetableview.reloadData()
+        }catch{
+            
+        }
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         //tableviewの高さを変える
@@ -100,22 +107,21 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
-//    // スワイプしたセルを削除
-//    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-//        let delete = UITableViewRowAction(style: .destructive, title: "Delete") { (action, indexPath) in
-//            let realm = try! Realm()
-//            let deletecontent = realm.objects(Item.self).filter("title == '\(self.itemList[indexPath.row].title)' && id == '\(self.itemList[indexPath.row].title)'")
-//            try! realm .write {
-//                print(self.itemList[indexPath.row].title)
-//                realm.delete(deletecontent)
-//                print(self.itemList[indexPath.row].title)
-//                self.savetableview.reloadData()
-//            }
-////            self.itemList[indexPath.row].title.remove(at: indexPath.row)
-//            self.savetableview.deleteRows(at: [indexPath], with: .automatic)
-//        }
-//        return [delete]
-//    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            do{
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.delete(self.itemList[indexPath.row])
+                }
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+            }catch{
+            }
+            tableView.reloadData()
+        }
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
@@ -123,11 +129,9 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
-        
+        let object = itemList[indexPath.row]
         cell?.textLabel?.text = itemList[indexPath.row].title
-        
         print(itemList[indexPath.row].title)
-        //        saveData.set(itemList[indexPath.row].title, forKey: "Title")
         
         return cell!
     }
@@ -135,8 +139,6 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
-        //                vc.savedTitle = itemList[indexPath.row].title
-        //                print("タイトル\(itemList[indexPath.row].title)")
         if itemList.count != 0 {
             savedTitle = itemList[indexPath.row].title!
             print("タイトル\(savedTitle!)")
