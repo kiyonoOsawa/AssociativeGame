@@ -54,9 +54,9 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                         contents.title = self.savedItem.title
                         contents.content = alert.textFields![0].text
                         let realm = try! Realm()
-                                            
+                        
                         try! realm.write {
-//                            realm.add(savedItem)
+                            //                            realm.add(savedItem)
                             self.savedItem.contents.append(contents)
                         }
                         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")

@@ -76,7 +76,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="dXm-mn-qhC">
-                                <rect key="frame" x="20" y="132" width="374" height="764"/>
+                                <rect key="frame" x="20" y="178" width="374" height="718"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="70" id="OTy-VY-BNl">
@@ -90,12 +90,8 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ooY-Ih-Yis">
-                                <rect key="frame" x="304" y="747" width="85" height="85"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="85" id="EYU-JG-Qfa"/>
-                                    <constraint firstAttribute="width" constant="85" id="Jr1-00-0hv"/>
-                                </constraints>
-                                <state key="normal" backgroundImage="add"/>
+                                <rect key="frame" x="123" y="776" width="179" height="90"/>
+                                <state key="normal" backgroundImage="addbutton"/>
                                 <connections>
                                     <action selector="aleat:" destination="6Nq-wD-7Y9" eventType="touchUpInside" id="leS-mH-CAw"/>
                                 </connections>
@@ -106,10 +102,12 @@
                         <constraints>
                             <constraint firstItem="dXm-mn-qhC" firstAttribute="leading" secondItem="PO5-Hx-VOg" secondAttribute="leading" constant="20" id="23z-Qg-21y"/>
                             <constraint firstItem="PO5-Hx-VOg" firstAttribute="trailing" secondItem="dXm-mn-qhC" secondAttribute="trailing" constant="20" id="4fk-0A-aYc"/>
-                            <constraint firstAttribute="bottom" secondItem="dXm-mn-qhC" secondAttribute="bottom" id="B0u-P2-77E"/>
-                            <constraint firstItem="PO5-Hx-VOg" firstAttribute="bottom" secondItem="ooY-Ih-Yis" secondAttribute="bottom" constant="30" id="JQz-r6-hmp"/>
-                            <constraint firstItem="dXm-mn-qhC" firstAttribute="top" secondItem="PO5-Hx-VOg" secondAttribute="top" constant="44" id="qr1-iX-WPU"/>
-                            <constraint firstItem="PO5-Hx-VOg" firstAttribute="trailing" secondItem="ooY-Ih-Yis" secondAttribute="trailing" constant="25" id="vo6-Fq-ZBr"/>
+                            <constraint firstItem="ooY-Ih-Yis" firstAttribute="leading" secondItem="PO5-Hx-VOg" secondAttribute="leading" constant="123" id="ALf-Wj-Pal"/>
+                            <constraint firstItem="ooY-Ih-Yis" firstAttribute="top" secondItem="PO5-Hx-VOg" secondAttribute="top" constant="688" id="DyT-8p-zbf"/>
+                            <constraint firstAttribute="bottom" secondItem="ooY-Ih-Yis" secondAttribute="bottom" constant="30" id="IR8-H6-Ejq"/>
+                            <constraint firstItem="PO5-Hx-VOg" firstAttribute="trailing" secondItem="ooY-Ih-Yis" secondAttribute="trailing" constant="112" id="Vwh-sb-dti"/>
+                            <constraint firstAttribute="bottom" secondItem="dXm-mn-qhC" secondAttribute="bottom" id="tHb-Qy-kYJ"/>
+                            <constraint firstItem="dXm-mn-qhC" firstAttribute="top" secondItem="PO5-Hx-VOg" secondAttribute="top" constant="90" id="zPv-9V-KwQ"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="GA0-R7-Dfw"/>
@@ -119,7 +117,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bMJ-5N-gAv" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3754" y="-607"/>
+            <point key="canvasLocation" x="3753.6231884057975" y="-607.36607142857144"/>
         </scene>
         <!--Item-->
         <scene sceneID="Lrj-Hn-c0h">
@@ -332,7 +330,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="add" width="120" height="120"/>
+        <image name="addbutton" width="291" height="187"/>
         <image name="banana" width="120" height="120"/>
         <image name="box" width="374" height="90"/>
         <image name="idea" width="120" height="120"/>
