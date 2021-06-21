@@ -1,22 +1,34 @@
 //
-//  AddViewController.swift
+//  GameViewController.swift
 //  Associative game
 //
-//  Created by 大澤清乃 on 2021/03/06.
+//  Created by 大澤清乃 on 2021/06/20.
 //
+
 
 import UIKit
 import RealmSwift
 
-class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate, UITableViewDelegate {
+class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate, UITableViewDelegate {
     
     @IBOutlet var addtableview: UITableView!
+    @IBOutlet var timerLabel: UILabel!
+    //    @IBOutlet var timerCount: UIButton!
     var contentList: Results<Contents>!
     let realm = try! Realm()
     var savedItem: Item!
     var contentsArray = Array<Any>()
+    //Timerクラスのインスタンスの作成
+    var timer: Timer = Timer()
+    //制限時間の残り時間をカウントする変数
+    var count: Int = 30
     
     override func viewDidLoad() {
+        
+        self.timerLabel.layer.cornerRadius = 38
+        self.timerLabel.clipsToBounds = true
+        self.timerLabel.layer.borderWidth = 2
+        self.timerLabel.layer.borderColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1).cgColor
         self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
         super.viewDidLoad()
         
@@ -32,6 +44,40 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         print("保存後")
         print(results)
         
+    }
+    @IBAction func startGame() {
+        //タイマーが動いているかの確認(二重で進むのを防ぐ）
+        if !timer.isValid {
+        timer = Timer.scheduledTimer(
+            timeInterval: 1, //1秒ごとにselectorに処理を実行する
+            target: self,
+            selector: #selector(self.timerCount), //1秒ごとに実行されるメソッドの指定
+            userInfo: nil,
+            repeats: true //毎秒処理を実行したいので、'repeats: true'としてあげる
+        )
+    }
+    }
+    @objc func timerCount() {
+        //変数を1秒減らす
+        count -= 1
+        //今の秒数をUILabelに反映する
+        timerLabel.text = String(count)
+        //ゲームが終了したかの確認
+        if count == 0 {
+            print("ゲーム終了")
+            //タイマーを終了
+            timer.invalidate()
+            //アラート
+            let alert: UIAlertController = UIAlertController(title: "Time UP", message: "", preferredStyle: .alert)
+            // 表示させる
+            alert.view.tintColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1)
+            present(alert, animated: true, completion: nil)
+            // 三秒だけ表示
+            // アラートを閉じる
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+                alert.dismiss(animated: true, completion: nil)
+            })
+        }
     }
     
     @IBAction func aleat(_ sender: Any) {
@@ -133,8 +179,6 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
             tableView.reloadData()
         }
     }
-    
-    
     
     /*
      // MARK: - Navigation

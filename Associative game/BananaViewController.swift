@@ -138,13 +138,24 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
-        if itemList.count != 0 {
-            savedItem = itemList[indexPath.row]
-            print("タイトル\(savedItem!)")
-            print("タイトル\(itemList[indexPath.row].title)")
-            vc.savedItem = itemList[indexPath.row]
-            self.navigationController?.pushViewController(vc, animated: true)
+        if itemList[indexPath.row].timer == true {
+            let vc = storyboard.instantiateViewController(identifier: "gameVC") as! GameViewController
+            if itemList.count != 0 {
+                savedItem = itemList[indexPath.row]
+                print("タイトル\(savedItem!)")
+                print("タイトル\(itemList[indexPath.row].title)")
+                vc.savedItem = itemList[indexPath.row]
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+        } else {
+            let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
+            if itemList.count != 0 {
+                savedItem = itemList[indexPath.row]
+                print("タイトル\(savedItem!)")
+                print("タイトル\(itemList[indexPath.row].title)")
+                vc.savedItem = itemList[indexPath.row]
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         }
     }
     
