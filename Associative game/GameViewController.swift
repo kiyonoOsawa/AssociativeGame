@@ -13,7 +13,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     
     @IBOutlet var addtableview: UITableView!
     @IBOutlet var timerLabel: UILabel!
-    //    @IBOutlet var timerCount: UIButton!
+    @IBOutlet var startButton: UIButton!
     var contentList: Results<Contents>!
     let realm = try! Realm()
     var savedItem: Item!
@@ -48,15 +48,35 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     @IBAction func startGame() {
         //タイマーが動いているかの確認(二重で進むのを防ぐ）
         if !timer.isValid {
-        timer = Timer.scheduledTimer(
-            timeInterval: 1, //1秒ごとにselectorに処理を実行する
-            target: self,
-            selector: #selector(self.timerCount), //1秒ごとに実行されるメソッドの指定
-            userInfo: nil,
-            repeats: true //毎秒処理を実行したいので、'repeats: true'としてあげる
-        )
+            startButton.setImage(UIImage(named: "stop"), for: .normal)
+            timer = Timer.scheduledTimer(
+                timeInterval: 1, //1秒ごとにselectorに処理を実行する
+                target: self,
+                selector: #selector(self.timerCount), //1秒ごとに実行されるメソッドの指定
+                userInfo: nil,
+                repeats: true //毎秒処理を実行したいので、'repeats: true'としてあげる
+            )
+        } else {
+            startButton.setImage(UIImage(named: "start"), for: .normal)
+            finishGame()
+        }
     }
+    
+    func finishGame() {
+        //タイマーを終了
+        timer.invalidate()
+        //アラート
+        let alert: UIAlertController = UIAlertController(title: "Finish", message: "", preferredStyle: .alert)
+        // 表示させる
+        alert.view.tintColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1)
+        present(alert, animated: true, completion: nil)
+        // 三秒だけ表示
+        // アラートを閉じる
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            alert.dismiss(animated: true, completion: nil)
+        })
     }
+    
     @objc func timerCount() {
         //変数を1秒減らす
         count -= 1
@@ -64,19 +84,9 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         timerLabel.text = String(count)
         //ゲームが終了したかの確認
         if count == 0 {
+            startButton.setImage(UIImage(named: "start"), for: .normal)
             print("ゲーム終了")
-            //タイマーを終了
-            timer.invalidate()
-            //アラート
-            let alert: UIAlertController = UIAlertController(title: "Time UP", message: "", preferredStyle: .alert)
-            // 表示させる
-            alert.view.tintColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1)
-            present(alert, animated: true, completion: nil)
-            // 三秒だけ表示
-            // アラートを閉じる
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                alert.dismiss(animated: true, completion: nil)
-            })
+            finishGame()
         }
     }
     

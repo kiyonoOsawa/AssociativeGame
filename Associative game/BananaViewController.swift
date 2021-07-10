@@ -17,61 +17,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     var maxId: String{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? ""}
     let realm = try! Realm()
     var savedItem: Item!
-    
-    //    @IBAction func aleat(_ sender: Any) {
-    //        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-    //        let textField = UITextField()
-    //        alert.title = "新規作成"
-    //        alert.message = "タイトルを入力"
-    //        alert.addTextField(configurationHandler: {(textField) -> Void in
-    //            textField.delegate = self
-    //
-    //        })
-    //
-    //        //追加ボタン
-    //        alert.addAction(
-    //            UIAlertAction(
-    //                title: "追加",
-    //                style: .default,
-    //                handler: {(action) -> Void in
-    //                    self.hello(action.title!)
-    //                    //textfieldでItemを保存
-    //                    if alert.textFields![0].text != "" {
-    //                        let item = Item()
-    //                        item.title = alert.textFields![0].text
-    //                        item.id = self.maxId + 1
-    //                        let realm = try! Realm()
-    //
-    //                        try! realm.write {
-    //                            realm.add(item)
-    //                        }
-    //                        self.itemList = realm.objects(Item.self)
-    //                        self.savetableview.reloadData()
-    //                    }
-    //                })
-    //        )
-    //        //キャンセルボタン
-    //        alert.addAction(
-    //            UIAlertAction(
-    //                title: "キャンセル",
-    //                style: .cancel,
-    //                handler: {(action) -> Void in
-    //                    self.hello(action.title!)
-    //                })
-    //        )
-    //        //アラートが表示されるごとにprint
-    //        self.present(
-    //            alert,
-    //            animated: true,
-    //            completion: {
-    //                print("アラートが表示された")
-    //            })
-    //    }
-    //
-    //    func hello(_ msg:String){
-    //        print(msg)
-    //    }
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         

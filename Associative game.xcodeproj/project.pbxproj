@@ -23,6 +23,7 @@
 		6C9CEF3425B412190028C3D5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6C9CEF3225B412190028C3D5 /* LaunchScreen.storyboard */; };
 		6C9CEF3F25B4121A0028C3D5 /* Associative_gameTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9CEF3E25B4121A0028C3D5 /* Associative_gameTests.swift */; };
 		6C9CEF4A25B4121A0028C3D5 /* Associative_gameUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9CEF4925B4121A0028C3D5 /* Associative_gameUITests.swift */; };
+		6CA4E22426915ADB00EEBAB1 /* MatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA4E22326915ADB00EEBAB1 /* MatchingViewController.swift */; };
 		6CB4882725D8F1AE00ACA96F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4882625D8F1AE00ACA96F /* TabBarViewController.swift */; };
 		6CB4882C25D8F84F00ACA96F /* TabBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4882B25D8F84F00ACA96F /* TabBar.swift */; };
 		6CB67E0925F28B53000CC485 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB67E0825F28B53000CC485 /* AddViewController.swift */; };
@@ -74,6 +75,7 @@
 		6C9CEF4525B4121A0028C3D5 /* Associative gameUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Associative gameUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6C9CEF4925B4121A0028C3D5 /* Associative_gameUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Associative_gameUITests.swift; sourceTree = "<group>"; };
 		6C9CEF4B25B4121A0028C3D5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6CA4E22326915ADB00EEBAB1 /* MatchingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MatchingViewController.swift; sourceTree = "<group>"; };
 		6CB4882625D8F1AE00ACA96F /* TabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 		6CB4882B25D8F84F00ACA96F /* TabBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBar.swift; sourceTree = "<group>"; };
 		6CB67E0825F28B53000CC485 /* AddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddViewController.swift; sourceTree = "<group>"; };
@@ -173,6 +175,7 @@
 				6C2FB257267EFFD800DEB7DE /* GameViewController.swift */,
 				6C7C6E76267EE1E4000620DB /* AddTableViewCell.swift */,
 				6C7F92FA25C7C11800524274 /* IdeaViewController.swift */,
+				6CA4E22326915ADB00EEBAB1 /* MatchingViewController.swift */,
 				6C04645C25FDB3EA00DA3D0D /* Item.swift */,
 				6C9CEF2A25B412170028C3D5 /* Main.storyboard */,
 				6CD522F8265A1A0E00308CB4 /* Assets.xcassets */,
@@ -448,6 +451,7 @@
 				6CB67E0925F28B53000CC485 /* AddViewController.swift in Sources */,
 				6C9CEF2925B412170028C3D5 /* ViewController.swift in Sources */,
 				6C7F92FB25C7C11800524274 /* IdeaViewController.swift in Sources */,
+				6CA4E22426915ADB00EEBAB1 /* MatchingViewController.swift in Sources */,
 				6C9CEF2F25B412170028C3D5 /* Associative_game.xcdatamodeld in Sources */,
 				6C9CEF2525B412170028C3D5 /* AppDelegate.swift in Sources */,
 				6C9CEF2725B412170028C3D5 /* SceneDelegate.swift in Sources */,
