@@ -9,6 +9,20 @@ import UIKit
 import RealmSwift
 import CoreData
 
+func createContent(title: String, content: String) -> Contents {
+    let contents = Contents()
+    contents.title = title
+    contents.content = content
+    return contents
+}
+
+let initialData: [Contents] = [
+    createContent(title: "飛行機", content: "空"),
+    createContent(title: "車", content: "道路"),
+    createContent(title: "電車", content: "線路"),
+    createContent(title: "散歩", content: "歩道")
+]
+
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

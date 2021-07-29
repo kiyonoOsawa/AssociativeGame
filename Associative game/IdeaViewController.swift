@@ -9,8 +9,9 @@ import UIKit
 
 class IdeaViewController: UIViewController {
     
+    @IBOutlet var bookmark: UIButton!
     @IBOutlet var matching: UIButton!
-    @IBOutlet var favorite: UIButton!
+    @IBOutlet var matchinglist: UIButton!
     @IBOutlet var list: UIButton!
     
     override func viewDidLoad() {

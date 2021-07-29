@@ -29,7 +29,8 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         self.timerLabel.clipsToBounds = true
         self.timerLabel.layer.borderWidth = 2
         self.timerLabel.layer.borderColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1).cgColor
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
+        self.timerLabel.textColor = UIColor(red: 4/255, green: 21/255, blue: 41/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 4/255, green: 21/255, blue: 41/255, alpha: 1.0)
         super.viewDidLoad()
         
         print("値渡し\(savedItem) in viewdidload")

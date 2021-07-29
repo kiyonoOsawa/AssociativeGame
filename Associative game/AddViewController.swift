@@ -17,7 +17,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     var contentsArray = Array<Any>()
     
     override func viewDidLoad() {
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 4/255, green: 21/255, blue: 41/255, alpha: 1.0)
         super.viewDidLoad()
         
         print("値渡し\(savedItem) in viewdidload")
@@ -89,7 +89,6 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         //データの取得
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-        //        self.contentList = realm.objects(Contents.self).filter("title == ''")
         print("中身")
         print(contentList)
         
