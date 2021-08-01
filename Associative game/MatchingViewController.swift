@@ -18,13 +18,15 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     var randomContent: Contents!
     var item: Item!
     var contentList: [Contents] = []
-    var tempArray: [Contents] = []
+    var tempArray: [MatchingPair] = []
     var maxId: String{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? ""}
     let realm = try! Realm()
     
     override func viewDidLoad() {
         self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
         super.viewDidLoad()
+        
+        matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         matchinglist.rowHeight = 90
         matchinglist.dataSource = self
@@ -40,9 +42,31 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         tempArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
+        cell.datatextLabel.text = tempArray[indexPath.row].pair1!
+        cell.ideatextLabel.text = tempArray[indexPath.row].pair2
+        let selectMatchingPair = tempArray[indexPath.row]
+        if selectMatchingPair.IsFavorite == false {
+            cell.starimage.image = UIImage(named: "borderstar")
+        }else{
+            cell.starimage.image = UIImage(named: "star")
+        }
         
-        return cell!
+        return cell
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectMatchingPair = tempArray[indexPath.row]
+        if selectMatchingPair.IsFavorite == false {
+            // realmの元のデータを書き換えるからrealm.writeで囲む
+            try! realm.write {
+                selectMatchingPair.IsFavorite = true
+            }
+        }else{
+            try! realm.write {
+                selectMatchingPair.IsFavorite = false
+            }
+        }
+        tableView.reloadData()
     }
     //pickerviewの列の数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -65,8 +89,23 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         //横幅を155に設定
         custumView.frame.size.width = 155
         //Xibファイル上に配置してあるラベルに表示する文字列を設定する
-        custumView.label.text = "番号は\(row)です"
+        custumView.label.text = contentList[row].content
         return custumView
+    }
+    
+    @IBAction func tupstock () {
+        //pickerviewの行を取得
+        let contents = contentList[self.matchpick.selectedRow(inComponent: 0)]
+        let matchingPair = MatchingPair()
+        matchingPair.title = item.title
+        matchingPair.pair1 = randomContent.content
+        matchingPair.pair2 = contents.content
+        matchingPair.IsFavorite = false
+        tempArray.append(matchingPair)
+        try! realm.write{
+            realm.add(tempArray)
+        }
+        matchinglist.reloadData()
     }
     
     // Do any additional setup after loading the view.

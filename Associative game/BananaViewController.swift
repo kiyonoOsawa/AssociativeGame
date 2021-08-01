@@ -31,7 +31,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         //tableviewの高さを変える
-        savetableview.rowHeight = 90
+        savetableview.rowHeight = 70
         savetableview.delegate = self
         savetableview.dataSource = self
         //アイコンの大きさを変える
