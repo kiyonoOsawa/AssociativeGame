@@ -296,6 +296,9 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="eBK-2g-fOU"/>
+                    <connections>
+                        <outlet property="favoritetableview" destination="HKr-KF-dQk" id="zTw-OL-I39"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="WMJ-zb-i5u" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

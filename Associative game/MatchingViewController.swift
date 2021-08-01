@@ -23,8 +23,8 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     let realm = try! Realm()
     
     override func viewDidLoad() {
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
         super.viewDidLoad()
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
         
         matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
@@ -51,7 +51,6 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         }else{
             cell.starimage.image = UIImage(named: "star")
         }
-        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
