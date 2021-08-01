@@ -8,7 +8,7 @@
 import UIKit
 import RealmSwift
 
-class MatchingViewController: UIViewController, UITableViewDataSource, UITabBarDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITableViewDelegate {
+class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate{
     
     @IBOutlet var ideaLabel: UILabel!
     @IBOutlet var matchinglist: UITableView!
@@ -55,6 +55,18 @@ class MatchingViewController: UIViewController, UITableViewDataSource, UITabBarD
     //pickerviewに表示する配列
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return contentList[row].content
+    }
+    //pickerviewに表示する独自のビューを設定する
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        //Xibファイルを読み込む
+        let custumView = UINib(nibName: "CardView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! Card
+        //高さを40に設定
+        custumView.frame.size.height = 40
+        //横幅を155に設定
+        custumView.frame.size.width = 155
+        //Xibファイル上に配置してあるラベルに表示する文字列を設定する
+        custumView.label.text = "番号は\(row)です"
+        return custumView
     }
     
     // Do any additional setup after loading the view.
