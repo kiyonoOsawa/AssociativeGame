@@ -34,7 +34,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         super.viewDidLoad()
         
         print("値渡し\(savedItem) in viewdidload")
-        addtableview.rowHeight = 90
+        addtableview.rowHeight = 70
         addtableview.dataSource = self
         addtableview.delegate = self
         //        savedTitle = (saveData.object(forKey: "Title") as! String)

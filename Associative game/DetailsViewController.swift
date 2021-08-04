@@ -22,7 +22,7 @@ class DetailsViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
     @IBAction func saveButton(_ sender: UIButton) {
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
         
         let item = Item()
         item.title = titletextField.text!
@@ -40,7 +40,7 @@ class DetailsViewController: UIViewController {
         }
     }
     @IBAction func cancelButton(_ sender: UIButton) {
-        self.presentingViewController?.presentingViewController?.dismiss(animated: true, completion: nil)
+        self.presentingViewController?.dismiss(animated: true, completion: nil)
     }
     
     

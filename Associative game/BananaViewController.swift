@@ -17,7 +17,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     var maxId: String{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? ""}
     let realm = try! Realm()
     var savedItem: Item!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,7 +26,6 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
             itemList = realm.objects(Item.self)
             savetableview.reloadData()
         }catch{
-            
         }
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)

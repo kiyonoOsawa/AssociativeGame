@@ -28,7 +28,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         
         matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
-        matchinglist.rowHeight = 90
+        matchinglist.rowHeight = 70
         matchinglist.dataSource = self
         matchinglist.delegate = self
         matchpick.dataSource = self
@@ -38,8 +38,14 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         randomContent = item.contents.randomElement()
         ideaLabel.text = randomContent.content
     }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //データの取得
+        self.tempArray = Array(realm.objects(MatchingPair.self))
+        matchinglist.reloadData()
+    }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        tempArray.count
+        return tempArray.count
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
@@ -66,6 +72,20 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
             }
         }
         tableView.reloadData()
+    }
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            do{
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.delete(self.tempArray[indexPath.row])
+                }
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+            }catch{
+            }
+            tableView.reloadData()
+        }
     }
     //pickerviewの列の数
     func numberOfComponents(in pickerView: UIPickerView) -> Int {

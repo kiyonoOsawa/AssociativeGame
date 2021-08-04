@@ -30,7 +30,7 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
         
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         //tableviewの高さを変える
-        matchtableview.rowHeight = 90
+        matchtableview.rowHeight = 70
         matchtableview.delegate = self
         matchtableview.dataSource = self
         //アイコンの大きさを変える

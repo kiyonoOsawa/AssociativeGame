@@ -18,13 +18,33 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        favoritetableview.rowHeight = 90
+        favoritetableview.rowHeight = 70
         favoritetableview.dataSource = self
         favoritetableview.delegate = self
 
         // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
         favoritetableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //データの取得
+        self.favoriteArray = Array(realm.objects(MatchingPair.self))
+        favoritetableview.reloadData()
+    }
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectMatchingPair = favoriteArray[indexPath.row]
+        if selectMatchingPair.IsFavorite == true {
+            // realmの元のデータを書き換えるからrealm.writeで囲む
+            try! realm.write {
+                selectMatchingPair.IsFavorite = false
+            }
+        }else{
+//            try! realm.write {
+//                selectMatchingPair.IsFavorite = true
+//            }
+        }
+        tableView.reloadData()
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favoriteArray.count

@@ -16,12 +16,13 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     var savedItem: Item!
     var contentsArray = Array<Any>()
     
+    
     override func viewDidLoad() {
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 4/255, green: 21/255, blue: 41/255, alpha: 1.0)
         super.viewDidLoad()
         
-        print("値渡し\(savedItem) in viewdidload")
-        addtableview.rowHeight = 90
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 4/255, green: 21/255, blue: 41/255, alpha: 1.0)
+//      print("値渡し\(savedItem) in viewdidload")
+        addtableview.rowHeight = 70
         addtableview.dataSource = self
         addtableview.delegate = self
         //        savedTitle = (saveData.object(forKey: "Title") as! String)
