@@ -16,7 +16,7 @@ class DetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         titletextField.layer.cornerRadius = 7
-        titletextField.layer.borderColor = CGColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 0.4)
+        titletextField.layer.borderColor = CGColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
         titletextField.layer.borderWidth = 0.6
         
         // Do any additional setup after loading the view.

@@ -38,7 +38,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
             item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
         // 画像と文字の選択時の色を指定（未選択字の色はデフォルトのまま）
-        UITabBar.appearance().tintColor = UIColor.init(red: 8/255, green: 25/255, blue: 45/255, alpha: 100/100)
+        UITabBar.appearance().tintColor = UIColor.init(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {

@@ -29,8 +29,8 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         self.timerLabel.clipsToBounds = true
         self.timerLabel.layer.borderWidth = 2
         self.timerLabel.layer.borderColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1).cgColor
-        self.timerLabel.textColor = UIColor(red: 4/255, green: 21/255, blue: 41/255, alpha: 1.0)
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 4/255, green: 21/255, blue: 41/255, alpha: 1.0)
+        self.timerLabel.textColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
         super.viewDidLoad()
         
         print("値渡し\(savedItem) in viewdidload")
@@ -44,6 +44,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         let results = realm.objects(Contents.self)
         print("保存後")
         print(results)
+        self.navigationItem.title = savedItem.title
         
     }
     @IBAction func startGame() {
@@ -146,7 +147,6 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         //データの取得
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-        //        self.contentList = realm.objects(Contents.self).filter("title == ''")
         print("中身")
         print(contentList)
         
@@ -158,6 +158,9 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //cell選択時の色を透明にする
+        var cellSelectedBgView = UIView()
+        cellSelectedBgView.backgroundColor = UIColor.clear
         
         if indexPath.row == contentList.count - 1 {
             //3つあるうちの最新アイテムの場合

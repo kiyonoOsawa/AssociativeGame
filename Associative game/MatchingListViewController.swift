@@ -17,8 +17,9 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
     let realm = try! Realm()
     
     override func viewDidLoad() {
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
         
         do{
             let realm = try Realm()
@@ -33,12 +34,6 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
         matchtableview.rowHeight = 70
         matchtableview.delegate = self
         matchtableview.dataSource = self
-        //アイコンの大きさを変える
-        //        for item in (self.tabBarController?.tabBar.items)! {
-        //            item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        //        }
-        // 画像と文字の選択時の色を指定（未選択字の色はデフォルトのまま）
-        UITabBar.appearance().tintColor = UIColor.init(red: 8/255, green: 25/255, blue: 45/255, alpha: 100/100)
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -60,6 +55,7 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
                 try! realm.write {
                     realm.delete(self.itemList[indexPath.row])
                 }
+//                itemList.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
             }catch{
             }
@@ -71,6 +67,10 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //cell選択時の色を透明にする
+        var cellSelectedBgView = UIView()
+        cellSelectedBgView.backgroundColor = UIColor.clear
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         let object = itemList[indexPath.row]
         cell?.textLabel?.text = itemList[indexPath.row].title

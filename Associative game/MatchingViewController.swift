@@ -15,6 +15,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     @IBOutlet var matchpick: UIPickerView!
     @IBOutlet var stock: UIButton!
     
+    var fontArray = ["System Medium"]
     var randomContent: Contents!
     var item: Item!
     var contentList: [Contents] = []
@@ -24,7 +25,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
         
         matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
@@ -38,27 +39,49 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         randomContent = item.contents.randomElement()
         ideaLabel.text = randomContent.content
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //データの取得
+        //一度全てのデータを取得する
         self.tempArray = Array(realm.objects(MatchingPair.self))
+        print(self.tempArray)
+        if self.tempArray.count != 0 {
+            //for文を使って表示されているアイデアと関係のないMatchingPairを配列から消去する
+            for index in 0 ..< tempArray.count - 1 {
+                let temp = tempArray[index]
+                //もしタイトルが前の画面から受け渡されたitemのtitleと等しくなければ
+                if temp.title != item.title {
+                    //配列から削除する
+                    tempArray.remove(at: index)
+                }
+            }
+        }
+        
         matchinglist.reloadData()
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return tempArray.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //cell選択時の色を透明にする
+        var cellSelectedBgView = UIView()
+        cellSelectedBgView.backgroundColor = UIColor.clear
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
         cell.datatextLabel.text = tempArray[indexPath.row].pair1!
         cell.ideatextLabel.text = tempArray[indexPath.row].pair2
         let selectMatchingPair = tempArray[indexPath.row]
         if selectMatchingPair.IsFavorite == false {
-            cell.starimage.image = UIImage(named: "borderstar")
+            cell.starImage.image = UIImage(named: "borderstar")
         }else{
-            cell.starimage.image = UIImage(named: "star")
+            cell.starImage.image = UIImage(named: "star")
         }
         return cell
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectMatchingPair = tempArray[indexPath.row]
         if selectMatchingPair.IsFavorite == false {
@@ -81,6 +104,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
                 try! realm.write {
                     realm.delete(self.tempArray[indexPath.row])
                 }
+                tempArray.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
             }catch{
             }
@@ -101,6 +125,14 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     }
     //pickerviewに表示する独自のビューを設定する
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        // 表示するラベルを生成する
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 40))
+        label.textAlignment = .center
+        label.text = contentList[row].content
+        label.font = UIFont(name: fontArray[row],size:20)
+        //textcolorを設定
+        label.textColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+//        return label
         //Xibファイルを読み込む
         let custumView = UINib(nibName: "CardView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! Card
         //高さを40に設定
@@ -109,6 +141,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         custumView.frame.size.width = 155
         //Xibファイル上に配置してあるラベルに表示する文字列を設定する
         custumView.label.text = contentList[row].content
+        return label
         return custumView
     }
     

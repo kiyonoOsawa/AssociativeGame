@@ -20,7 +20,8 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 4/255, green: 21/255, blue: 41/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+
 //      print("値渡し\(savedItem) in viewdidload")
         addtableview.rowHeight = 70
         addtableview.dataSource = self
@@ -28,10 +29,10 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         //        savedTitle = (saveData.object(forKey: "Title") as! String)
         let realm = try! Realm()
         
-        
         let results = realm.objects(Contents.self)
         print("保存後")
         print(results)
+        self.navigationItem.title = savedItem.title
         
     }
     
@@ -101,6 +102,9 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //cell選択時の色を透明にする
+        var cellSelectedBgView = UIView()
+        cellSelectedBgView.backgroundColor = UIColor.clear
         
         if indexPath.row == contentList.count - 1 {
             //3つあるうちの最新アイテムの場合

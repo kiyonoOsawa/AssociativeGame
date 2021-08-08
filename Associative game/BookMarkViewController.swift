@@ -23,14 +23,25 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
         favoritetableview.delegate = self
 
         // Do any additional setup after loading the view.
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 8/255, green: 25/255, blue: 45/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
         favoritetableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //データの取得
-        self.favoriteArray = Array(realm.objects(MatchingPair.self))
-        favoritetableview.reloadData()
+        //全てのデータを取得
+        self.favoriteArray = Array(realm.objects(MatchingPair.self).filter("IsFavorite == true"))
+        //for文を使ってIsFavoriteがtrueでなはないMatchingPairを配列から削除する
+        for index in 0 ..< favoriteArray.count {
+            let matchingPair = favoriteArray[index]
+            //もしIsFavoriteがtrueでなければ
+            if !matchingPair.IsFavorite {
+                //配列から削除する
+                favoriteArray.remove(at: index)
+            }
+            favoritetableview.reloadData()
+        }
+        print(favoriteArray)
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectMatchingPair = favoriteArray[indexPath.row]
@@ -40,19 +51,28 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
                 selectMatchingPair.IsFavorite = false
             }
         }else{
-//            try! realm.write {
-//                selectMatchingPair.IsFavorite = true
-//            }
         }
         tableView.reloadData()
     }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return favoriteArray.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        //cell選択時の色を透明にする
+        var cellSelectedBgView = UIView()
+        cellSelectedBgView.backgroundColor = UIColor.clear
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
         cell.datatextLabel.text = favoriteArray[indexPath.row].pair1!
         cell.ideatextLabel.text = favoriteArray[indexPath.row].pair2
+        let selectMatchingPair = favoriteArray[indexPath.row]
+        if selectMatchingPair.IsFavorite == true {
+            cell.starImage.image = UIImage(named: "star")
+        } else {
+            cell.starImage.image = UIImage(named: "borderstar")
+        }
         return cell
     }
     
