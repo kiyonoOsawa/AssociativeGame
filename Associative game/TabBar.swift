@@ -13,6 +13,7 @@ class TabBar: UITabBar {
             var sizeThatFits = super.sizeThatFits(size)
             sizeThatFits.height = 145
             return sizeThatFits;
+        UITabBar.appearance().barTintColor = UIColor.red
         }
 
 }

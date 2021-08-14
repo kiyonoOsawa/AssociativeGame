@@ -20,6 +20,8 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
         
         do{
             let realm = try Realm()

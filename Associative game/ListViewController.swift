@@ -12,12 +12,15 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     
     @IBOutlet var listtableview: UITableView!
     var itemlist: Results<Contents>!
+//    var contents: [Contents] = []
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
         
         do{
             let realm = try Realm()
@@ -35,6 +38,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
         super.viewWillAppear(animated)
         //データの取得
         self.itemlist = realm.objects(Contents.self)
+        print("アイテムリスト")
         print(itemlist)
         listtableview.reloadData()
     }
@@ -43,13 +47,13 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         //cell選択時の色を透明にする
-        var cellSelectedBgView = UIView()
-        cellSelectedBgView.backgroundColor = UIColor.clear
+//        var cellSelectedBgView = UIView()
+//        cellSelectedBgView.backgroundColor = UIColor.clear
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         let object = itemlist[indexPath.row]
         cell?.textLabel?.text = itemlist[indexPath.row].content
-        print(itemlist[indexPath.row].title)
+//        print(itemlist[indexPath.row].title)
         
         return cell!
     }

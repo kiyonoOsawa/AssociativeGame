@@ -20,10 +20,12 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         do{
             let realm = try Realm()
             itemList = realm.objects(Item.self)
+            print("アイテム")
+            print(itemList)
             savetableview.reloadData()
         }catch{
         }
@@ -58,8 +60,18 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         if editingStyle == UITableViewCell.EditingStyle.delete {
             do{
                 let realm = try! Realm()
+                //削除したいデータを取得
+                let item = itemList[indexPath.row]
+                //ContentsとMatchingPairは別のクラスなので取得し直す必要がある
+                let contents = realm.objects(Contents.self).filter("title == %@", item.title)
+                let matchingPair = realm.objects(MatchingPair.self).filter("title == %@", item.title)
                 try! realm.write {
-                    realm.delete(self.itemList[indexPath.row])
+                    //MatchingPairを削除
+                    realm.delete(matchingPair)
+                    //Contentsを削除
+                    realm.delete(contents)
+                    //Itemを削除
+                    realm.delete(item)
                 }
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
             }catch{
@@ -103,25 +115,5 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
             }
         }
     }
-    
-    //    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-    //        if segue.identifier == "showAddSegue" {
-    //            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-    //            let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
-    //            vc.savedTitle = savedTitle!
-    //            print("vc: \(vc.savedTitle)")
-    //        }
-    //
-    //    }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
     
 }

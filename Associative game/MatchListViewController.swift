@@ -18,6 +18,8 @@ class MatchListViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
         matchlisttableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         matchlisttableview.rowHeight = 70
@@ -27,9 +29,7 @@ class MatchListViewController: UIViewController, UITableViewDelegate, UITableVie
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //データの取得
-        //全てのデータを取得
         self.matchlist = Array(realm.objects(MatchingPair.self))
-        //for文を使ってIsFavoriteがtrueでなはないMatchingPairを配列から削除する
         print(matchlist)
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

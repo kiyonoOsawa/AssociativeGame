@@ -25,7 +25,10 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print(Realm.Configuration.defaultConfiguration.fileURL!)
         self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
         
         matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
@@ -36,7 +39,9 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         matchpick.delegate = self
         
         contentList = Array(item.contents)
-        randomContent = item.contents.randomElement()
+        randomContent = item.contents.randomElement()!
+        print(randomContent)
+        
         ideaLabel.text = randomContent.content
     }
     
@@ -48,7 +53,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         print(self.tempArray)
         if self.tempArray.count != 0 {
             //for文を使って表示されているアイデアと関係のないMatchingPairを配列から消去する
-            for index in 0 ..< tempArray.count - 1 {
+            for index in 0 ..< tempArray.count {
                 let temp = tempArray[index]
                 //もしタイトルが前の画面から受け渡されたitemのtitleと等しくなければ
                 if temp.title != item.title {
@@ -129,10 +134,10 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 40))
         label.textAlignment = .center
         label.text = contentList[row].content
-        label.font = UIFont(name: fontArray[row],size:20)
+        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
         //textcolorを設定
         label.textColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
-//        return label
+        //        return label
         //Xibファイルを読み込む
         let custumView = UINib(nibName: "CardView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! Card
         //高さを40に設定

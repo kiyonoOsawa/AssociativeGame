@@ -45,6 +45,8 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         print("保存後")
         print(results)
         self.navigationItem.title = savedItem.title
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
         
     }
     @IBAction func startGame() {

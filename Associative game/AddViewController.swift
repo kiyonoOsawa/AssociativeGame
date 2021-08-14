@@ -21,18 +21,19 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
-
-//      print("値渡し\(savedItem) in viewdidload")
+        
+        //      print("値渡し\(savedItem) in viewdidload")
         addtableview.rowHeight = 70
         addtableview.dataSource = self
         addtableview.delegate = self
-        //        savedTitle = (saveData.object(forKey: "Title") as! String)
         let realm = try! Realm()
         
         let results = realm.objects(Contents.self)
         print("保存後")
         print(results)
         self.navigationItem.title = savedItem.title
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
         
     }
     
