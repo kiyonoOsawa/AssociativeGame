@@ -23,7 +23,7 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
         favoritetableview.delegate = self
 
         // Do any additional setup after loading the view.
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         favoritetableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
     }
     override func viewWillAppear(_ animated: Bool) {

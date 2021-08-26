@@ -21,7 +21,7 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
         
         self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
         self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
+            .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         
         do{
             let realm = try Realm()
@@ -43,6 +43,12 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
         self.itemList = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self)
         matchtableview.reloadData()
+    }
+    func moveToAddViewController(item: Item) {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
+        vc.savedItem = item
+        self.navigationController?.pushViewController(vc, animated: true)
     }
     // セルの編集許可
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -76,14 +82,28 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         let object = itemList[indexPath.row]
         cell?.textLabel?.text = itemList[indexPath.row].title
+        cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         print(itemList[indexPath.row].title)
         
         return cell!
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //画面遷移が行われる
-        performSegue(withIdentifier: "matching", sender: itemList[indexPath.row])
+        
+        let item = itemList[indexPath.row]
+        if item.contents.isEmpty {
+            //もし選択されたItemのcontentsが空だったらアラートを表示
+            let alert = UIAlertController(title: "アイデアが空です", message: "Banana画面からアイデアを追加しましょう", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            alert.addAction(UIAlertAction(title: "Banana画面へ", style: .default, handler: { _ in
+                //選択されたItemを元のaddviewcontrollerに移動する
+                self.moveToAddViewController(item: item)
+            }))
+            present(alert, animated: true, completion: nil)
+        } else {
+            //Itemのcontentsがあるので画面遷移が行われる
+            performSegue(withIdentifier: "matching", sender: itemList[indexPath.row])
+        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

@@ -64,6 +64,16 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                         }
                         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
                         self.addtableview.reloadData()
+                        //スクロールするには最下部のIndexPathが必要
+                        //IndexPathはSectionとrowの２つの要素で構成されている
+                        //Sectionは1つしかないので0
+                        //RowはContentsの要素数なので'self.savedItem.contents.count'または'self.contentList'から１引いた数
+                        let section = 0
+                        let row = self.contentList.count - 1
+                        let indexPath = IndexPath(row: row, section: section)
+                        //特定のCell番号(IndexPath)までスクロールしてくれるメソッド
+                        self.addtableview.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                        
                     }
                     
                 })

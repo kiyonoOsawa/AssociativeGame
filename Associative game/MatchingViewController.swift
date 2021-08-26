@@ -26,10 +26,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
-        
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         matchinglist.rowHeight = 70
@@ -39,17 +36,22 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         matchpick.delegate = self
         
         contentList = Array(item.contents)
-        randomContent = item.contents.randomElement()!
+        
+        if !contentList.isEmpty {
+            //ContentListが空だとランダムな要素が取得できないのでクラッシュする  →if文で要素が１つでもある場合に限定する
+            randomContent = item.contents.randomElement()!
+            ideaLabel.text = randomContent.content
+        }
         print(randomContent)
         
-        ideaLabel.text = randomContent.content
+//        ideaLabel.text = randomContent.content
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //データの取得
         //一度全てのデータを取得する
-        self.tempArray = Array(realm.objects(MatchingPair.self))
+        self.tempArray = Array(realm.objects(MatchingPair.self).filter("title == %@", item.title!)) //MatchingPairのtitle変数とitem.titleが同じかを確認できる
         print(self.tempArray)
         if self.tempArray.count != 0 {
             //for文を使って表示されているアイデアと関係のないMatchingPairを配列から消去する
@@ -135,9 +137,6 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         label.textAlignment = .center
         label.text = contentList[row].content
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        //textcolorを設定
-        label.textColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
-        //        return label
         //Xibファイルを読み込む
         let custumView = UINib(nibName: "CardView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! Card
         //高さを40に設定

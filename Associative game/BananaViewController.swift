@@ -20,7 +20,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         do{
             let realm = try Realm()
             itemList = realm.objects(Item.self)
@@ -49,6 +49,9 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         self.itemList = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self)
         savetableview.reloadData()
+        //navigationBarを透明にする
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
     }
     // セルの編集許可
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -85,9 +88,11 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
         let object = itemList[indexPath.row]
         cell?.textLabel?.text = itemList[indexPath.row].title
+        cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         print(itemList[indexPath.row].title)
         
         return cell!
@@ -114,6 +119,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         }
+        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
     
 }
