@@ -20,8 +20,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
-        
+        self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         //      print("値渡し\(savedItem) in viewdidload")
         addtableview.rowHeight = 70
         addtableview.dataSource = self
@@ -32,8 +31,10 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         print("保存後")
         print(results)
         self.navigationItem.title = savedItem.title
+        var navBarHeight = self.navigationController?.navigationBar.frame.size.height
+        navBarHeight = 70
         self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
+            .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         
     }
     

@@ -18,8 +18,8 @@ class MatchListViewController: UIViewController, UITableViewDelegate, UITableVie
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-//        self.navigationController?.navigationBar.titleTextAttributes = [
-//            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         matchlisttableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         matchlisttableview.rowHeight = 70
@@ -45,7 +45,6 @@ class MatchListViewController: UIViewController, UITableViewDelegate, UITableVie
         } else {
             cell.starImage.image = UIImage(named: "borderstar")
         }
-        
         return cell
     }
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -62,5 +61,22 @@ class MatchListViewController: UIViewController, UITableViewDelegate, UITableVie
         }
         tableView.reloadData()
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        
+        if editingStyle == UITableViewCell.EditingStyle.delete {
+            do{
+                let realm = try! Realm()
+                try! realm.write {
+                    realm.delete(self.matchlist[indexPath.row])
+                }
+                matchlist.remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
+            }catch{
+            }
+            tableView.reloadData()
+        }
+    }
+
     
 }

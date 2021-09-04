@@ -27,6 +27,8 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         super.viewDidLoad()
         print(Realm.Configuration.defaultConfiguration.fileURL!)
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        self.navigationController?.navigationBar.titleTextAttributes = [
+            .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         
         matchinglist.rowHeight = 70
@@ -76,7 +78,6 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         //cell選択時の色を透明にする
         var cellSelectedBgView = UIView()
         cellSelectedBgView.backgroundColor = UIColor.clear
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
         cell.datatextLabel.text = tempArray[indexPath.row].pair1!
         cell.ideatextLabel.text = tempArray[indexPath.row].pair2
@@ -86,6 +87,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         }else{
             cell.starImage.image = UIImage(named: "star")
         }
+        print("お気に入り登録")
         return cell
     }
     

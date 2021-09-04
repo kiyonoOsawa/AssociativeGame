@@ -35,6 +35,8 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         savetableview.rowHeight = 70
         savetableview.delegate = self
         savetableview.dataSource = self
+        // xibを入れる
+        savetableview.register(UINib(nibName: "BananaTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         //アイコンの大きさを変える
         for item in (self.tabBarController?.tabBar.items)! {
             item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
@@ -89,13 +91,16 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell")
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BananaTableViewCell
         let object = itemList[indexPath.row]
-        cell?.textLabel?.text = itemList[indexPath.row].title
-        cell?.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        cell.titletextLabel.text = itemList[indexPath.row].title
+        //>マーク
+        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        let icon = UIImage(data: itemList[indexPath.row].icon ?? Data())
+        cell.iconimageView.image = icon
         print(itemList[indexPath.row].title)
         
-        return cell!
+        return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

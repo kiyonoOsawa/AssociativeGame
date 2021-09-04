@@ -16,6 +16,7 @@ class IdeaViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        // 文字色
         UITabBar.appearance().tintColor = UIColor.init(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
     }
 }

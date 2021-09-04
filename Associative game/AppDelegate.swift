@@ -16,13 +16,6 @@ func createContent(title: String, content: String) -> Contents {
     return contents
 }
 
-let initialData: [Contents] = [
-    createContent(title: "飛行機", content: "空"),
-    createContent(title: "車", content: "道路"),
-    createContent(title: "電車", content: "線路"),
-    createContent(title: "散歩", content: "歩道")
-]
-
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -32,7 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         let config = Realm.Configuration(
-            schemaVersion: 11,
+            schemaVersion: 13,
             migrationBlock: { migration, oldSchemaVersion in
                 if (oldSchemaVersion < 1) {}
             })

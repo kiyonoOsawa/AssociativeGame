@@ -14,6 +14,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     @IBOutlet var addtableview: UITableView!
     @IBOutlet var timerLabel: UILabel!
     @IBOutlet var startButton: UIButton!
+    @IBOutlet var alertImage: UIImageView!
     var contentList: Results<Contents>!
     let realm = try! Realm()
     var savedItem: Item!
@@ -24,15 +25,13 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     var count: Int = 30
     
     override func viewDidLoad() {
-        
+        super.viewDidLoad()
         self.timerLabel.layer.cornerRadius = 38
         self.timerLabel.clipsToBounds = true
         self.timerLabel.layer.borderWidth = 2
         self.timerLabel.layer.borderColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1).cgColor
         self.timerLabel.textColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        super.viewDidLoad()
-        
         print("値渡し\(savedItem) in viewdidload")
         addtableview.rowHeight = 70
         addtableview.dataSource = self
@@ -69,6 +68,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     func finishGame() {
         //タイマーを終了
         timer.invalidate()
+        count = 30
         //アラート
         let alert: UIAlertController = UIAlertController(title: "Finish", message: "", preferredStyle: .alert)
         // 表示させる
@@ -86,6 +86,14 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         count -= 1
         //今の秒数をUILabelに反映する
         timerLabel.text = String(count)
+        //残り3秒
+        if count == 5 || count == 3 || count == 1 {
+            alertImage.isHidden = false
+        } else if count == 4 || count == 2 {
+            alertImage.isHidden = true
+        } else {
+            alertImage.isHidden = true
+        }
         //ゲームが終了したかの確認
         if count == 0 {
             startButton.setImage(UIImage(named: "start"), for: .normal)
@@ -93,7 +101,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
             finishGame()
         }
     }
-    
+
     @IBAction func aleat(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         alert.title = "新しいアイディア"
