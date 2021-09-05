@@ -21,6 +21,8 @@ class MatchListViewController: UIViewController, UITableViewDelegate, UITableVie
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         matchlisttableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        matchlisttableview.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
+        matchlisttableview.tableFooterView = UIView()
         
         matchlisttableview.rowHeight = 70
         matchlisttableview.delegate = self

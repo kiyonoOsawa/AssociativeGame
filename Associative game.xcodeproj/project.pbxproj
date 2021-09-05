@@ -39,7 +39,7 @@
 		6CA4E22426915ADB00EEBAB1 /* MatchingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CA4E22326915ADB00EEBAB1 /* MatchingViewController.swift */; };
 		6CB4882725D8F1AE00ACA96F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB4882625D8F1AE00ACA96F /* TabBarViewController.swift */; };
 		6CB67E0925F28B53000CC485 /* AddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6CB67E0825F28B53000CC485 /* AddViewController.swift */; };
-		6CD522F9265A1A0F00308CB4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CD522F8265A1A0E00308CB4 /* Assets.xcassets */; };
+		6CFF648426E44E40007ABD69 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6CD522F8265A1A0E00308CB4 /* Assets.xcassets */; };
 		A528C96C08429748DF82E750 /* Pods_Associative_game_Associative_gameUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC5D7042EBB5431C6FD293E /* Pods_Associative_game_Associative_gameUITests.framework */; };
 		E5817B11F6DF9D02E12529AF /* Pods_Associative_game.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B3392D378502CE02275223DC /* Pods_Associative_game.framework */; };
 /* End PBXBuildFile section */
@@ -352,8 +352,8 @@
 				6C9CEF3425B412190028C3D5 /* LaunchScreen.storyboard in Resources */,
 				6C48448A26DD1703004A95A9 /* TableViewCell.xib in Resources */,
 				6C4844A226DD1A6B004A95A9 /* CardView.xib in Resources */,
+				6CFF648426E44E40007ABD69 /* Assets.xcassets in Resources */,
 				6C5ABFA326B658C300649692 /* BookMarkTableViewCell.xib in Resources */,
-				6CD522F9265A1A0F00308CB4 /* Assets.xcassets in Resources */,
 				6C9CEF2C25B412170028C3D5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

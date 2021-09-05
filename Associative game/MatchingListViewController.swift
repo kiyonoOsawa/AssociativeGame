@@ -24,6 +24,8 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
             .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         // xibを入れる
         matchtableview.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        matchtableview.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
+        matchtableview.tableFooterView = UIView() //セルがない下の部分を無くす
         
         do{
             let realm = try Realm()

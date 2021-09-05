@@ -21,6 +21,9 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        savetableview.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
+        savetableview.tableFooterView = UIView()
+        
         do{
             let realm = try Realm()
             itemList = realm.objects(Item.self)
@@ -96,6 +99,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         cell.titletextLabel.text = itemList[indexPath.row].title
         //>マーク
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        cell.accessoryView?.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
         let icon = UIImage(data: itemList[indexPath.row].icon ?? Data())
         cell.iconimageView.image = icon
         print(itemList[indexPath.row].title)

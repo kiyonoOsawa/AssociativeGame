@@ -27,6 +27,8 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         favoritetableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        favoritetableview.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
+        favoritetableview.tableFooterView = UIView()
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
