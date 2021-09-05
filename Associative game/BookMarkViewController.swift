@@ -27,7 +27,7 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         favoritetableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
-        favoritetableview.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
+        favoritetableview.backgroundColor = UIColor(named: "BackColor")
         favoritetableview.tableFooterView = UIView()
     }
     override func viewWillAppear(_ animated: Bool) {
@@ -64,14 +64,12 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //cell選択時の色を透明にする
-        var cellSelectedBgView = UIView()
-        cellSelectedBgView.backgroundColor = UIColor.clear
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
         cell.datatextLabel.text = favoriteArray[indexPath.row].pair1!
         cell.ideatextLabel.text = favoriteArray[indexPath.row].pair2
         let selectMatchingPair = favoriteArray[indexPath.row]
+        //セルの選択状態
+        cell.selectionStyle = .none
         if selectMatchingPair.IsFavorite == true {
             cell.starImage.image = UIImage(named: "star")
         } else {

@@ -18,22 +18,22 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="We5-0I-WmX">
-                        <rect key="frame" x="8" y="7.5" width="304" height="75"/>
+                        <rect key="frame" x="20" y="7.5" width="280" height="75"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1bT-TL-AtN">
-                                <rect key="frame" x="0.0" y="0.0" width="92" height="75"/>
+                                <rect key="frame" x="0.0" y="0.0" width="84.5" height="75"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" red="0.058823529409999999" green="0.1450980392" blue="0.25098039220000001" alpha="1" colorSpace="calibratedRGB"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lno-h2-Lyy">
-                                <rect key="frame" x="96" y="0.0" width="140" height="75"/>
+                                <rect key="frame" x="88.5" y="0.0" width="123.5" height="75"/>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="20"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <color key="highlightedColor" red="0.015686274510000001" green="0.08235294118" blue="0.16078431369999999" alpha="1" colorSpace="calibratedRGB"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="bottom" translatesAutoresizingMaskIntoConstraints="NO" id="Yy8-gI-rtT">
-                                <rect key="frame" x="240" y="0.0" width="64" height="75"/>
+                                <rect key="frame" x="216" y="0.0" width="64" height="75"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="right" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="borderstar" translatesAutoresizingMaskIntoConstraints="NO" id="cwJ-Ee-vxZ">
                                         <rect key="frame" x="8" y="0.0" width="56" height="75"/>
@@ -45,9 +45,9 @@
                 </subviews>
                 <color key="backgroundColor" name="BackColor"/>
                 <constraints>
-                    <constraint firstItem="We5-0I-WmX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="8" id="0Tt-tu-fhp"/>
+                    <constraint firstItem="We5-0I-WmX" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="20" id="0Tt-tu-fhp"/>
                     <constraint firstAttribute="bottom" secondItem="We5-0I-WmX" secondAttribute="bottom" constant="7.5" id="28L-x1-KWz"/>
-                    <constraint firstAttribute="trailing" secondItem="We5-0I-WmX" secondAttribute="trailing" constant="8" id="7m4-ng-XxD"/>
+                    <constraint firstAttribute="trailing" secondItem="We5-0I-WmX" secondAttribute="trailing" constant="20" id="7m4-ng-XxD"/>
                     <constraint firstItem="We5-0I-WmX" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="7.5" id="foM-Aq-E2g"/>
                     <constraint firstItem="Yy8-gI-rtT" firstAttribute="width" secondItem="H2p-sc-9uM" secondAttribute="width" multiplier="0.2" id="iJa-DY-UhH"/>
                 </constraints>

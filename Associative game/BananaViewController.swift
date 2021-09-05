@@ -20,10 +20,8 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        savetableview.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
+        savetableview.backgroundColor = UIColor(named: "BackColor")
         savetableview.tableFooterView = UIView()
-        
         do{
             let realm = try Realm()
             itemList = realm.objects(Item.self)
@@ -33,7 +31,6 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         }catch{
         }
         
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
         //tableviewの高さを変える
         savetableview.rowHeight = 70
         savetableview.delegate = self
@@ -58,6 +55,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
     }
+    
     // セルの編集許可
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
@@ -93,17 +91,18 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BananaTableViewCell
         let object = itemList[indexPath.row]
         cell.titletextLabel.text = itemList[indexPath.row].title
         //>マーク
         cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        cell.accessoryView?.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
+        // icon
         let icon = UIImage(data: itemList[indexPath.row].icon ?? Data())
         cell.iconimageView.image = icon
+        //セルの選択状態
+        cell.selectionStyle = .none
+        cell.backgroundColor = UIColor(named: "BackColor")
         print(itemList[indexPath.row].title)
-        
         return cell
     }
     

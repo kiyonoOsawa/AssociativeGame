@@ -34,20 +34,24 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         print("値渡し\(savedItem) in viewdidload")
         addtableview.rowHeight = 70
+        //データの取得
+        let results = realm.objects(Item.self)
+        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
+        print("中身")
+        print(contentList)
         addtableview.dataSource = self
         addtableview.delegate = self
+        addtableview.backgroundColor = UIColor(named: "BackColor")
+        addtableview.tableFooterView = UIView()
         //        savedTitle = (saveData.object(forKey: "Title") as! String)
         let realm = try! Realm()
-        
-        
-        let results = realm.objects(Contents.self)
-        print("保存後")
-        print(results)
+        //        print("保存後")
+//        print(results)
         self.navigationItem.title = savedItem.title
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
-        
     }
+    
     @IBAction func startGame() {
         //タイマーが動いているかの確認(二重で進むのを防ぐ）
         if !timer.isValid {
@@ -130,7 +134,6 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
                         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
                         self.addtableview.reloadData()
                     }
-                    
                 })
         )
         alert.addAction(
@@ -148,6 +151,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
                 print("アラートが表示された")
             })
     }
+    
     func hello(_ msg:String){
         print(msg)
     }
@@ -159,7 +163,6 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
         print("中身")
         print(contentList)
-        
         addtableview.reloadData()
     }
     
@@ -168,19 +171,19 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //cell選択時の色を透明にする
-        var cellSelectedBgView = UIView()
-        cellSelectedBgView.backgroundColor = UIColor.clear
         
         if indexPath.row == contentList.count - 1 {
             //3つあるうちの最新アイテムの場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "LastCell") as! AddTableViewCell
             cell.ideaLabel.text = contentList[indexPath.row].content
+            //セルの選択状態
+            cell.selectionStyle = .none
             return cell
         } else {
             //最新アイテムでない場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! AddTableViewCell
             cell.ideaLabel.text = contentList[indexPath.row].content
+            cell.selectionStyle = .none
             return cell
         }
     }

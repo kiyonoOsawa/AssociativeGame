@@ -16,26 +16,29 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     var savedItem: Item!
     var contentsArray = Array<Any>()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         //      print("値渡し\(savedItem) in viewdidload")
         addtableview.rowHeight = 70
+        //データの取得
+        let results = realm.objects(Item.self)
+        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
+        print("中身")
+        print(contentList)
         addtableview.dataSource = self
         addtableview.delegate = self
+        //背景色を変える
+        addtableview.backgroundColor = UIColor(named: "BackColor")
+        addtableview.tableFooterView = UIView()
         let realm = try! Realm()
-        
-        let results = realm.objects(Contents.self)
-        print("保存後")
-        print(results)
+//        print("保存後")
+//        print(results)
         self.navigationItem.title = savedItem.title
         var navBarHeight = self.navigationController?.navigationBar.frame.size.height
         navBarHeight = 70
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
-        
     }
     
     @IBAction func aleat(_ sender: Any) {
@@ -74,9 +77,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                         let indexPath = IndexPath(row: row, section: section)
                         //特定のCell番号(IndexPath)までスクロールしてくれるメソッド
                         self.addtableview.scrollToRow(at: indexPath, at: .bottom, animated: true)
-                        
                     }
-                    
                 })
         )
         alert.addAction(
@@ -94,6 +95,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                 print("アラートが表示された")
             })
     }
+    
     func hello(_ msg:String){
         print(msg)
     }
@@ -105,7 +107,6 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
         print("中身")
         print(contentList)
-        
         addtableview.reloadData()
     }
     
@@ -114,19 +115,17 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //cell選択時の色を透明にする
-        var cellSelectedBgView = UIView()
-        cellSelectedBgView.backgroundColor = UIColor.clear
-        
         if indexPath.row == contentList.count - 1 {
             //3つあるうちの最新アイテムの場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "LastCell") as! AddTableViewCell
             cell.ideaLabel.text = contentList[indexPath.row].content
+            cell.selectionStyle = .none
             return cell
         } else {
             //最新アイテムでない場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! AddTableViewCell
             cell.ideaLabel.text = contentList[indexPath.row].content
+            cell.selectionStyle = .none
             return cell
         }
     }
@@ -136,7 +135,6 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
         if editingStyle == UITableViewCell.EditingStyle.delete {
             do{
                 let realm = try! Realm()
@@ -149,17 +147,4 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
             tableView.reloadData()
         }
     }
-    
-    
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

@@ -47,6 +47,9 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
         self.popImageView.layer.cornerRadius = 25
         //吹き出しを隠す
         imageGroupView.isHidden = true
+        // selectImageIconの角丸
+        self.selectImageIcon.layer.cornerRadius = 10
+        self.selectImageIcon.layer.masksToBounds = true
     }
 
     //画面をタップした時に呼ばれるメソッド
@@ -197,7 +200,5 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
         selectImageIcon.setImage(image, for: .normal)
         //UIImagePickerViewControllerを閉じる
         picker.dismiss(animated: true, completion: nil)
-        
     }
-    
 }

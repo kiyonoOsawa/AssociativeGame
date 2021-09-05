@@ -16,7 +16,8 @@ class TabBarViewController: UITabBarController {
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().layer.borderWidth = 0.50
         UITabBar.appearance().clipsToBounds = true
-        // Do any additional setup after loading the view.
+        UITabBar.appearance().backgroundColor = UIColor(named: "BackColor")
+        UITabBar.appearance().barTintColor = UIColor(named: "BackColor")
     }
     
 }

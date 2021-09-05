@@ -19,4 +19,11 @@ class IdeaViewController: UIViewController {
         // 文字色
         UITabBar.appearance().tintColor = UIColor.init(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        //navigationBarを透明にする
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+    }
 }

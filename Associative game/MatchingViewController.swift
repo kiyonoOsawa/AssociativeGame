@@ -30,6 +30,8 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        matchinglist.backgroundColor = UIColor(named: "BackColor")
+        matchinglist.tableFooterView = UIView() //セルがない下の部分を無くす
         
         matchinglist.rowHeight = 70
         matchinglist.dataSource = self
@@ -75,10 +77,9 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        //cell選択時の色を透明にする
-        var cellSelectedBgView = UIView()
-        cellSelectedBgView.backgroundColor = UIColor.clear
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
+        //セルの選択状態
+        cell.selectionStyle = .none
         cell.datatextLabel.text = tempArray[indexPath.row].pair1!
         cell.ideatextLabel.text = tempArray[indexPath.row].pair2
         let selectMatchingPair = tempArray[indexPath.row]

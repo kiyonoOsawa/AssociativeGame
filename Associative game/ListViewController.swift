@@ -22,7 +22,7 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
             .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
         // xibを入れる
         listtableview.register(UINib(nibName: "TableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
-        listtableview.backgroundColor = UIColor(red: 255, green: 252, blue: 242, alpha: 1.0)
+        listtableview.backgroundColor = UIColor(named: "BackColor")
         listtableview.tableFooterView = UIView()
         
         do{
@@ -50,6 +50,8 @@ class ListViewController: UIViewController, UITableViewDelegate, UITableViewData
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! TableViewCell
+        //セルの選択状態
+        cell.selectionStyle = .none
         let object = itemlist[indexPath.row]
         cell.tabletextLabel.text = itemlist[indexPath.row].content
         return cell
