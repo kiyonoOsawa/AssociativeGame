@@ -129,5 +129,4 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         }
         tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
-    
 }

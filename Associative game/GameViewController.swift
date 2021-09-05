@@ -46,7 +46,6 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         //        savedTitle = (saveData.object(forKey: "Title") as! String)
         let realm = try! Realm()
         //        print("保存後")
-//        print(results)
         self.navigationItem.title = savedItem.title
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
@@ -105,7 +104,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
             finishGame()
         }
     }
-
+    
     @IBAction func aleat(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
         alert.title = "新しいアイディア"
@@ -206,15 +205,4 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
             tableView.reloadData()
         }
     }
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
 }

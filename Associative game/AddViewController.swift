@@ -32,8 +32,6 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         addtableview.backgroundColor = UIColor(named: "BackColor")
         addtableview.tableFooterView = UIView()
         let realm = try! Realm()
-//        print("保存後")
-//        print(results)
         self.navigationItem.title = savedItem.title
         var navBarHeight = self.navigationController?.navigationBar.frame.size.height
         navBarHeight = 70

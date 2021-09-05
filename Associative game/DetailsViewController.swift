@@ -13,12 +13,10 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
     @IBOutlet var titletextField: UITextField!
     @IBOutlet var timerswitch: UISwitch!
     @IBOutlet var topImageView: UIImageView!
-    
     @IBOutlet var imageGroupView: UIView!
     @IBOutlet var popImageView: UIImageView!
     //ライブラリから選ぶためのbutton
     @IBOutlet var libraryButton: UIButton!
-    
     @IBOutlet var firstIcon: UIButton!
     @IBOutlet var secondIcon: UIButton!
     @IBOutlet var thirdIcon: UIButton!
@@ -51,7 +49,7 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
         self.selectImageIcon.layer.cornerRadius = 10
         self.selectImageIcon.layer.masksToBounds = true
     }
-
+    
     //画面をタップした時に呼ばれるメソッド
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
@@ -86,7 +84,7 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
         //吹き出しを表示する
         imageGroupView.isHidden = false
     }
-
+    
     //ライブラリを開くボタンを押した時に実行するメソッド
     @IBAction func tapLibraryButton() {
         let picker = UIImagePickerController()

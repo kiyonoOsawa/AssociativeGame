@@ -9,20 +9,16 @@ import UIKit
 import RealmSwift
 
 class BookMarkViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
-
-    @IBOutlet var favoritetableview: UITableView!
     
+    @IBOutlet var favoritetableview: UITableView!
     var favoriteArray: [MatchingPair] = []
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         favoritetableview.rowHeight = 70
         favoritetableview.dataSource = self
         favoritetableview.delegate = self
-
-        // Do any additional setup after loading the view.
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         self.navigationController?.navigationBar.titleTextAttributes = [
             .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
@@ -30,6 +26,7 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
         favoritetableview.backgroundColor = UIColor(named: "BackColor")
         favoritetableview.tableFooterView = UIView()
     }
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         //データの取得
@@ -77,17 +74,4 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
         }
         return cell
     }
-    
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
