@@ -41,6 +41,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     
     @IBAction func aleat(_ sender: Any) {
         let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        alert.view.tintColor = .black
         alert.title = "新しいアイディア"
         alert.message = "入力"
         alert.addTextField(configurationHandler: {(textField) -> Void in

@@ -77,6 +77,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         // 表示させる
         alert.view.tintColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1)
         present(alert, animated: true, completion: nil)
+        alert.view.tintColor = .black
         // 三秒だけ表示
         // アラートを閉じる
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
