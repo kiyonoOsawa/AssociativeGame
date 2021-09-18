@@ -10,13 +10,13 @@ import RealmSwift
 
 class DetailsViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    @IBOutlet var titletextField: UITextField!
-    @IBOutlet var timerswitch: UISwitch!
+    @IBOutlet var titleTextField: UITextField!
+    @IBOutlet var timerSwitch: UISwitch!
     @IBOutlet var topImageView: UIImageView!
     @IBOutlet var imageGroupView: UIView!
     @IBOutlet var popImageView: UIImageView!
-    //ライブラリから選ぶためのbutton
-    @IBOutlet var libraryButton: UIButton!
+    @IBOutlet var libraryButton: UIButton!     //ライブラリから選ぶためのbutton
+    @IBOutlet var selectImageIcon: UIButton!    //今選んでいる画像が表示されるbutton
     @IBOutlet var firstIcon: UIButton!
     @IBOutlet var secondIcon: UIButton!
     @IBOutlet var thirdIcon: UIButton!
@@ -33,14 +33,12 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
     @IBOutlet var fourteenthIcon: UIButton!
     @IBOutlet var fifteenthIcon: UIButton!
     @IBOutlet var sixteenthIcon: UIButton!
-    //今選んでいる画像が表示されるbutton
-    @IBOutlet var selectImageIcon: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titletextField.layer.cornerRadius = 7
-        titletextField.layer.borderColor = CGColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
-        titletextField.layer.borderWidth = 0.6
+        titleTextField.layer.cornerRadius = 7
+        titleTextField.layer.borderColor = CGColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+        titleTextField.layer.borderWidth = 0.6
         //吹き出しの角丸
         self.popImageView.layer.cornerRadius = 25
         //吹き出しを隠す
@@ -60,15 +58,13 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
     @IBAction func saveButton(_ sender: UIButton) {
         self.presentingViewController?.dismiss(animated: true, completion: nil)
         let item = Item()
-        item.title = titletextField.text!
-        item.timer = timerswitch.isOn
+        item.title = titleTextField.text!
+        item.timer = timerSwitch.isOn
         item.icon = selectImageIcon.currentImage?.pngData()
         do{
             let realm = try! Realm()
             try realm.write({ () -> Void in
                 realm.add(item)
-                print("title Saved")
-                print("timer Saved")
             })
         } catch {
             print("Save is Faild")

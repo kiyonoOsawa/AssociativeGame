@@ -9,7 +9,6 @@ import UIKit
 
 class TabBarViewController: UITabBarController {
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         // 境界線の透過
@@ -19,5 +18,4 @@ class TabBarViewController: UITabBarController {
         UITabBar.appearance().backgroundColor = UIColor(named: "BackColor")
         UITabBar.appearance().barTintColor = UIColor(named: "BackColor")
     }
-    
 }

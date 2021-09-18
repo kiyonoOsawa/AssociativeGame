@@ -11,7 +11,7 @@ class BookMarkTableViewCell: UITableViewCell {
     
     @IBOutlet var datatextLabel: UILabel!
     @IBOutlet var ideatextLabel: UILabel!
-    @IBOutlet var starImage: UIImageView!
+    @IBOutlet var starImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

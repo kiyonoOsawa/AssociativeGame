@@ -20,8 +20,22 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //navigationBarを透明にする
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        // 画像と文字の選択時の色を指定（未選択字の色はデフォルトのまま）
+        UITabBar.appearance().tintColor = UIColor.init(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
+        //アイコンの大きさを変える
+        for item in (self.tabBarController?.tabBar.items)! {
+            item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+        }
+        savetableview.rowHeight = 70
+        // xibを入れる
+        savetableview.register(UINib(nibName: "BananaTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         savetableview.backgroundColor = UIColor(named: "BackColor")
         savetableview.tableFooterView = UIView()
+        savetableview.delegate = self
+        savetableview.dataSource = self
         do{
             let realm = try Realm()
             itemList = realm.objects(Item.self)
@@ -30,19 +44,6 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
             savetableview.reloadData()
         }catch{
         }
-        
-        //tableviewの高さを変える
-        savetableview.rowHeight = 70
-        savetableview.delegate = self
-        savetableview.dataSource = self
-        // xibを入れる
-        savetableview.register(UINib(nibName: "BananaTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
-        //アイコンの大きさを変える
-        for item in (self.tabBarController?.tabBar.items)! {
-            item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-        }
-        // 画像と文字の選択時の色を指定（未選択字の色はデフォルトのまま）
-        UITabBar.appearance().tintColor = UIColor.init(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -51,12 +52,41 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         self.itemList = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self)
         savetableview.reloadData()
-        //navigationBarを透明にする
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
     }
     
-    // セルの編集許可
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return itemList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BananaTableViewCell
+        let object = itemList[indexPath.row]
+        // セルの選択状態
+        cell.selectionStyle = .none
+        cell.titletextLabel.text = itemList[indexPath.row].title
+        // >マーク
+        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
+        // icon
+        let icon = UIImage(data: itemList[indexPath.row].icon ?? Data())
+        cell.iconImageView.image = icon
+        cell.backgroundColor = UIColor(named: "BackColor")
+        print(itemList[indexPath.row].title)
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        // Main.Storyboardの取得
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        // 選択したitemの取得
+        let item = itemList[indexPath.row]
+        // StartViewControllerの生成
+        let startViewController = storyboard.instantiateViewController(identifier: "startVC") as! StartViewController
+        // 値渡しを行う
+        startViewController.selectedItem = item
+        // 画面遷移をする
+        navigationController?.pushViewController(startViewController, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
         return true
     }
@@ -72,11 +102,8 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
                 let contents = realm.objects(Contents.self).filter("title == %@", item.title)
                 let matchingPair = realm.objects(MatchingPair.self).filter("title == %@", item.title)
                 try! realm.write {
-                    //MatchingPairを削除
                     realm.delete(matchingPair)
-                    //Contentsを削除
                     realm.delete(contents)
-                    //Itemを削除
                     realm.delete(item)
                 }
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
@@ -84,49 +111,5 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
             }
             tableView.reloadData()
         }
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return itemList.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BananaTableViewCell
-        let object = itemList[indexPath.row]
-        cell.titletextLabel.text = itemList[indexPath.row].title
-        //>マーク
-        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
-        // icon
-        let icon = UIImage(data: itemList[indexPath.row].icon ?? Data())
-        cell.iconimageView.image = icon
-        //セルの選択状態
-        cell.selectionStyle = .none
-        cell.backgroundColor = UIColor(named: "BackColor")
-        print(itemList[indexPath.row].title)
-        return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        if itemList[indexPath.row].timer == true {
-            let vc = storyboard.instantiateViewController(identifier: "gameVC") as! GameViewController
-            if itemList.count != 0 {
-                savedItem = itemList[indexPath.row]
-                print("タイトル\(savedItem!)")
-                print("タイトル\(itemList[indexPath.row].title)")
-                vc.savedItem = itemList[indexPath.row]
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        } else {
-            let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
-            if itemList.count != 0 {
-                savedItem = itemList[indexPath.row]
-                print("タイトル\(savedItem!)")
-                print("タイトル\(itemList[indexPath.row].title)")
-                vc.savedItem = itemList[indexPath.row]
-                self.navigationController?.pushViewController(vc, animated: true)
-            }
-        }
-        tableView.deselectRow(at: indexPath as IndexPath, animated: true)
     }
 }

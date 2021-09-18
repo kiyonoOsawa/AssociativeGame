@@ -14,6 +14,5 @@ class Card: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         layer.borderWidth = 5
-        
     }
 }

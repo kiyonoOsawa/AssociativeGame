@@ -10,11 +10,11 @@ import UIKit
 class BananaTableViewCell: UITableViewCell {
     
     @IBOutlet var titletextLabel: UILabel!
-    @IBOutlet var iconimageView: UIImageView!
+    @IBOutlet var iconImageView: UIImageView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        self.iconimageView.layer.cornerRadius = 10
+        self.iconImageView.layer.cornerRadius = 10
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

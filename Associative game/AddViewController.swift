@@ -10,7 +10,7 @@ import RealmSwift
 
 class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate, UITableViewDelegate {
     
-    @IBOutlet var addtableview: UITableView!
+    @IBOutlet var addTableView: UITableView!
     var contentList: Results<Contents>!
     let realm = try! Realm()
     var savedItem: Item!
@@ -19,24 +19,16 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        //      print("値渡し\(savedItem) in viewdidload")
-        addtableview.rowHeight = 70
+        addTableView.rowHeight = 70
+        addTableView.backgroundColor = UIColor(named: "BackColor")
+        addTableView.tableFooterView = UIView()
+        addTableView.dataSource = self
+        addTableView.delegate = self
+        self.navigationItem.title = savedItem.title
         //データの取得
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-        print("中身")
-        print(contentList)
-        addtableview.dataSource = self
-        addtableview.delegate = self
-        //背景色を変える
-        addtableview.backgroundColor = UIColor(named: "BackColor")
-        addtableview.tableFooterView = UIView()
         let realm = try! Realm()
-        self.navigationItem.title = savedItem.title
-        var navBarHeight = self.navigationController?.navigationBar.frame.size.height
-        navBarHeight = 70
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
     }
     
     @IBAction func aleat(_ sender: Any) {
@@ -62,11 +54,10 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                         let realm = try! Realm()
                         
                         try! realm.write {
-                            //                            realm.add(savedItem)
                             self.savedItem.contents.append(contents)
                         }
                         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-                        self.addtableview.reloadData()
+                        self.addTableView.reloadData()
                         //スクロールするには最下部のIndexPathが必要
                         //IndexPathはSectionとrowの２つの要素で構成されている
                         //Sectionは1つしかないので0
@@ -75,7 +66,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                         let row = self.contentList.count - 1
                         let indexPath = IndexPath(row: row, section: section)
                         //特定のCell番号(IndexPath)までスクロールしてくれるメソッド
-                        self.addtableview.scrollToRow(at: indexPath, at: .bottom, animated: true)
+                        self.addTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
                     }
                 })
         )
@@ -101,12 +92,9 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //データの取得
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-        print("中身")
-        print(contentList)
-        addtableview.reloadData()
+        addTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -117,8 +105,8 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
         if indexPath.row == contentList.count - 1 {
             //3つあるうちの最新アイテムの場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "LastCell") as! AddTableViewCell
-            cell.ideaLabel.text = contentList[indexPath.row].content
             cell.selectionStyle = .none
+            cell.ideaLabel.text = contentList[indexPath.row].content
             return cell
         } else {
             //最新アイテムでない場合
@@ -141,7 +129,7 @@ class AddViewController: UIViewController,UITableViewDataSource,UITextFieldDeleg
                     realm.delete(self.contentList[indexPath.row])
                 }
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
-            }catch{
+            } catch {
             }
             tableView.reloadData()
         }

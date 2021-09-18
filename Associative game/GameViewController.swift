@@ -11,7 +11,7 @@ import RealmSwift
 
 class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate, UITableViewDelegate {
     
-    @IBOutlet var addtableview: UITableView!
+    @IBOutlet var addTableView: UITableView!
     @IBOutlet var timerLabel: UILabel!
     @IBOutlet var startButton: UIButton!
     @IBOutlet var alertImage: UIImageView!
@@ -30,25 +30,16 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         self.timerLabel.clipsToBounds = true
         self.timerLabel.layer.borderWidth = 2
         self.timerLabel.layer.borderColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1).cgColor
-        self.timerLabel.textColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        print("値渡し\(savedItem) in viewdidload")
-        addtableview.rowHeight = 70
-        //データの取得
+        addTableView.rowHeight = 70
+        addTableView.backgroundColor = UIColor(named: "BackColor")
+        addTableView.tableFooterView = UIView()
+        addTableView.dataSource = self
+        addTableView.delegate = self
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-        print("中身")
-        print(contentList)
-        addtableview.dataSource = self
-        addtableview.delegate = self
-        addtableview.backgroundColor = UIColor(named: "BackColor")
-        addtableview.tableFooterView = UIView()
-        //        savedTitle = (saveData.object(forKey: "Title") as! String)
         let realm = try! Realm()
-        //        print("保存後")
         self.navigationItem.title = savedItem.title
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)]
     }
     
     @IBAction func startGame() {
@@ -78,7 +69,6 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         alert.view.tintColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1)
         present(alert, animated: true, completion: nil)
         alert.view.tintColor = .black
-        // 三秒だけ表示
         // アラートを閉じる
         DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
             alert.dismiss(animated: true, completion: nil)
@@ -88,9 +78,8 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     @objc func timerCount() {
         //変数を1秒減らす
         count -= 1
-        //今の秒数をUILabelに反映する
         timerLabel.text = String(count)
-        //残り3秒
+        //残り5,3,1秒
         if count == 5 || count == 3 || count == 1 {
             alertImage.isHidden = false
         } else if count == 4 || count == 2 {
@@ -101,7 +90,6 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
         //ゲームが終了したかの確認
         if count == 0 {
             startButton.setImage(UIImage(named: "start"), for: .normal)
-            print("ゲーム終了")
             finishGame()
         }
     }
@@ -128,11 +116,10 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
                         let realm = try! Realm()
                         
                         try! realm.write {
-                            //                            realm.add(savedItem)
                             self.savedItem.contents.append(contents)
                         }
                         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-                        self.addtableview.reloadData()
+                        self.addTableView.reloadData()
                     }
                 })
         )
@@ -158,12 +145,9 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //データの取得
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-        print("中身")
-        print(contentList)
-        addtableview.reloadData()
+        addTableView.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -173,17 +157,15 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         if indexPath.row == contentList.count - 1 {
-            //3つあるうちの最新アイテムの場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "LastCell") as! AddTableViewCell
-            cell.ideaLabel.text = contentList[indexPath.row].content
-            //セルの選択状態
             cell.selectionStyle = .none
+            cell.ideaLabel.text = contentList[indexPath.row].content
             return cell
         } else {
             //最新アイテムでない場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! AddTableViewCell
-            cell.ideaLabel.text = contentList[indexPath.row].content
             cell.selectionStyle = .none
+            cell.ideaLabel.text = contentList[indexPath.row].content
             return cell
         }
     }
@@ -193,7 +175,6 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
         if editingStyle == UITableViewCell.EditingStyle.delete {
             do{
                 let realm = try! Realm()
@@ -201,7 +182,7 @@ class GameViewController: UIViewController,UITableViewDataSource,UITextFieldDele
                     realm.delete(self.contentList[indexPath.row])
                 }
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
-            }catch{
+            } catch {
             }
             tableView.reloadData()
         }

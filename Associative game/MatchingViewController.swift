@@ -11,9 +11,9 @@ import RealmSwift
 class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDataSource, UITableViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate{
     
     @IBOutlet var ideaLabel: UILabel!
-    @IBOutlet var matchinglist: UITableView!
-    @IBOutlet var matchpick: UIPickerView!
-    @IBOutlet var stock: UIButton!
+    @IBOutlet var matchingList: UITableView!
+    @IBOutlet var matchPick: UIPickerView!
+    @IBOutlet var stockButton: UIButton!
     
     var fontArray = ["System Medium"]
     var randomContent: Contents!
@@ -25,31 +25,25 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        print(Realm.Configuration.defaultConfiguration.fileURL!)
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
-        matchinglist.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
-        matchinglist.backgroundColor = UIColor(named: "BackColor")
-        matchinglist.tableFooterView = UIView() //セルがない下の部分を無くす
-        matchinglist.rowHeight = 70
-        matchinglist.dataSource = self
-        matchinglist.delegate = self
-        matchpick.dataSource = self
-        matchpick.delegate = self
+        matchingList.rowHeight = 70
+        matchingList.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        matchingList.backgroundColor = UIColor(named: "BackColor")
+        matchingList.tableFooterView = UIView() //セルがない下の部分を無くす
+        matchingList.dataSource = self
+        matchingList.delegate = self
+        matchPick.dataSource = self
+        matchPick.delegate = self
         contentList = Array(item.contents)
         if !contentList.isEmpty {
             //ContentListが空だとランダムな要素が取得できないのでクラッシュする  →if文で要素が１つでもある場合に限定する
             randomContent = item.contents.randomElement()!
             ideaLabel.text = randomContent.content
         }
-        print(randomContent)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //データの取得
-        //一度全てのデータを取得する
         self.tempArray = Array(realm.objects(MatchingPair.self).filter("title == %@", item.title!)) //MatchingPairのtitle変数とitem.titleが同じかを確認できる
         print(self.tempArray)
         if self.tempArray.count != 0 {
@@ -58,13 +52,11 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
                 let temp = tempArray[index]
                 //もしタイトルが前の画面から受け渡されたitemのtitleと等しくなければ
                 if temp.title != item.title {
-                    //配列から削除する
                     tempArray.remove(at: index)
                 }
             }
         }
-        
-        matchinglist.reloadData()
+        matchingList.reloadData()
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -73,36 +65,33 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
-        //セルの選択状態
         cell.selectionStyle = .none
         cell.datatextLabel.text = tempArray[indexPath.row].pair1!
         cell.ideatextLabel.text = tempArray[indexPath.row].pair2
         let selectMatchingPair = tempArray[indexPath.row]
         if selectMatchingPair.IsFavorite == false {
-            cell.starImage.image = UIImage(named: "borderstar")
-        }else{
-            cell.starImage.image = UIImage(named: "star")
+            cell.starImageView.image = UIImage(named: "borderstar")
+        } else {
+            cell.starImageView.image = UIImage(named: "star")
         }
-        print("お気に入り登録")
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectMatchingPair = tempArray[indexPath.row]
         if selectMatchingPair.IsFavorite == false {
-            // realmの元のデータを書き換えるからrealm.writeで囲む
             try! realm.write {
                 selectMatchingPair.IsFavorite = true
             }
-        }else{
+        } else {
             try! realm.write {
                 selectMatchingPair.IsFavorite = false
             }
         }
         tableView.reloadData()
     }
+    
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
         if editingStyle == UITableViewCell.EditingStyle.delete {
             do{
                 let realm = try! Realm()
@@ -111,7 +100,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
                 }
                 tempArray.remove(at: indexPath.row)
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
-            }catch{
+            } catch {
             }
             tableView.reloadData()
         }
@@ -134,26 +123,21 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     
     //pickerviewに表示する独自のビューを設定する
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        // 表示するラベルを生成する
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 40))
         label.textAlignment = .center
-        label.text = contentList[row].content
         label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
-        //Xibファイルを読み込む
+        label.text = contentList[row].content
         let custumView = UINib(nibName: "CardView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! Card
-        //高さを40に設定
         custumView.frame.size.height = 40
-        //横幅を155に設定
-        custumView.frame.size.width = 155
-        //Xibファイル上に配置してあるラベルに表示する文字列を設定する
+        custumView.frame.size.width = 120
         custumView.label.text = contentList[row].content
-        return label
         return custumView
+        return label
     }
     
     @IBAction func tupstock () {
         //pickerviewの行を取得
-        let contents = contentList[self.matchpick.selectedRow(inComponent: 0)]
+        let contents = contentList[self.matchPick.selectedRow(inComponent: 0)]
         let matchingPair = MatchingPair()
         matchingPair.title = item.title
         matchingPair.pair1 = randomContent.content
@@ -163,6 +147,6 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         try! realm.write{
             realm.add(tempArray)
         }
-        matchinglist.reloadData()
+        matchingList.reloadData()
     }
 }

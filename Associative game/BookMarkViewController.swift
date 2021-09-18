@@ -10,26 +10,23 @@ import RealmSwift
 
 class BookMarkViewController: UIViewController, UITableViewDataSource,UITableViewDelegate {
     
-    @IBOutlet var favoritetableview: UITableView!
+    @IBOutlet var favoriteTableView: UITableView!
     var favoriteArray: [MatchingPair] = []
     let realm = try! Realm()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        favoritetableview.rowHeight = 70
-        favoritetableview.dataSource = self
-        favoritetableview.delegate = self
         self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
-        self.navigationController?.navigationBar.titleTextAttributes = [
-            .foregroundColor: UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)]
-        favoritetableview.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
-        favoritetableview.backgroundColor = UIColor(named: "BackColor")
-        favoritetableview.tableFooterView = UIView()
+        favoriteTableView.rowHeight = 70
+        favoriteTableView.backgroundColor = UIColor(named: "BackColor")
+        favoriteTableView.tableFooterView = UIView()
+        favoriteTableView.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
+        favoriteTableView.dataSource = self
+        favoriteTableView.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //データの取得
         //全てのデータを取得
         self.favoriteArray = Array(realm.objects(MatchingPair.self).filter("IsFavorite == true"))
         //for文を使ってIsFavoriteがtrueでなはないMatchingPairを配列から削除する
@@ -37,13 +34,12 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
             let matchingPair = favoriteArray[index]
             //もしIsFavoriteがtrueでなければ
             if !matchingPair.IsFavorite {
-                //配列から削除する
                 favoriteArray.remove(at: index)
             }
-            favoritetableview.reloadData()
+            favoriteTableView.reloadData()
         }
-        print(favoriteArray)
     }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectMatchingPair = favoriteArray[indexPath.row]
         if selectMatchingPair.IsFavorite == true {
@@ -51,7 +47,7 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
             try! realm.write {
                 selectMatchingPair.IsFavorite = false
             }
-        }else{
+        } else {
         }
         tableView.reloadData()
     }
@@ -62,15 +58,15 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
+        cell.selectionStyle = .none
+
         cell.datatextLabel.text = favoriteArray[indexPath.row].pair1!
         cell.ideatextLabel.text = favoriteArray[indexPath.row].pair2
         let selectMatchingPair = favoriteArray[indexPath.row]
-        //セルの選択状態
-        cell.selectionStyle = .none
         if selectMatchingPair.IsFavorite == true {
-            cell.starImage.image = UIImage(named: "star")
+            cell.starImageView.image = UIImage(named: "star")
         } else {
-            cell.starImage.image = UIImage(named: "borderstar")
+            cell.starImageView.image = UIImage(named: "borderstar")
         }
         return cell
     }

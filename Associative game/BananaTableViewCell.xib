@@ -31,7 +31,7 @@
                 <color key="backgroundColor" name="BackColor"/>
             </tableViewCellContentView>
             <connections>
-                <outlet property="iconimageView" destination="x3f-km-RXg" id="HOr-ge-9we"/>
+                <outlet property="iconImageView" destination="x3f-km-RXg" id="HOr-ge-9we"/>
                 <outlet property="titletextLabel" destination="N92-Ck-ITg" id="gBt-ai-DjF"/>
             </connections>
             <point key="canvasLocation" x="-13.043478260869566" y="108.48214285714285"/>

@@ -56,7 +56,7 @@
             <connections>
                 <outlet property="datatextLabel" destination="1bT-TL-AtN" id="nEa-lU-D0i"/>
                 <outlet property="ideatextLabel" destination="Lno-h2-Lyy" id="x0e-dl-9oU"/>
-                <outlet property="starImage" destination="cwJ-Ee-vxZ" id="947-Gp-dKY"/>
+                <outlet property="starImageView" destination="cwJ-Ee-vxZ" id="947-Gp-dKY"/>
             </connections>
             <point key="canvasLocation" x="34.782608695652179" y="70.3125"/>
         </tableViewCell>

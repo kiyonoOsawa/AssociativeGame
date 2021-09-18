@@ -9,7 +9,6 @@ import UIKit
 
 class AddTableViewCell: UITableViewCell {
     
-    //セル内を宣言
     @IBOutlet var arrowImageView: UIImageView!
     @IBOutlet var ideaLabel: UILabel!
     
