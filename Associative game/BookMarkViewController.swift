@@ -16,7 +16,7 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor.black
         favoriteTableView.rowHeight = 70
         favoriteTableView.backgroundColor = UIColor(named: "BackColor")
         favoriteTableView.tableFooterView = UIView()

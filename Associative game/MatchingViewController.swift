@@ -25,7 +25,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor.black
         matchingList.rowHeight = 70
         matchingList.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         matchingList.backgroundColor = UIColor(named: "BackColor")

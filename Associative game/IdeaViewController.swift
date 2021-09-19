@@ -16,7 +16,7 @@ class IdeaViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        UITabBar.appearance().tintColor = UIColor.init(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        UITabBar.appearance().tintColor = UIColor.black
     }
     
     override func viewWillAppear(_ animated: Bool) {

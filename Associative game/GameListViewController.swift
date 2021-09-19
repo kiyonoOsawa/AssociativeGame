@@ -1,5 +1,5 @@
 //
-//  AddListViewController.swift
+//  GameListViewController.swift
 //  Associative game
 //
 //  Created by 大澤清乃 on 2021/09/18.
@@ -8,33 +8,92 @@
 import UIKit
 import RealmSwift
 
-
-class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate, UITableViewDelegate {
+class GameListViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate, UITableViewDelegate  {
     
     @IBOutlet var addTableView: UITableView!
+//    @IBOutlet var timerLabel: UILabel!
+//    @IBOutlet var startButton: UIButton!
+    @IBOutlet var alertImage: UIImageView!
     var contentList: Results<Contents>!
     let realm = try! Realm()
     var savedItem: Item!
     var contentsArray = Array<Any>()
-    
+//    //Timerクラスのインスタンスの作成
+//    var timer: Timer = Timer()
+//    //制限時間の残り時間をカウントする変数
+//    var count: Int = 30
+
     override func viewDidLoad() {
         super.viewDidLoad()
+//        self.timerLabel.layer.cornerRadius = 38
+//        self.timerLabel.clipsToBounds = true
+//        self.timerLabel.layer.borderWidth = 2
+//        self.timerLabel.layer.borderColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1).cgColor
         self.navigationController?.navigationBar.tintColor = UIColor.black
         addTableView.rowHeight = 70
         addTableView.backgroundColor = UIColor(named: "BackColor")
         addTableView.tableFooterView = UIView()
         addTableView.dataSource = self
         addTableView.delegate = self
-        self.navigationItem.title = savedItem.title
-        //データの取得
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
         let realm = try! Realm()
+        self.navigationItem.title = savedItem.title
     }
+//    @IBAction func startGame() {
+//        //タイマーが動いているかの確認(二重で進むのを防ぐ）
+//        if !timer.isValid {
+//            startButton.setImage(UIImage(named: "stop"), for: .normal)
+//            timer = Timer.scheduledTimer(
+//                timeInterval: 1, //1秒ごとにselectorに処理を実行する
+//                target: self,
+//                selector: #selector(self.timerCount), //1秒ごとに実行されるメソッドの指定
+//                userInfo: nil,
+//                repeats: true //毎秒処理を実行したいので、'repeats: true'としてあげる
+//            )
+//        } else {
+//            startButton.setImage(UIImage(named: "start"), for: .normal)
+//            finishGame()
+//        }
+//    }
+    
+//    func finishGame() {
+//        //タイマーを終了
+//        timer.invalidate()
+//        count = 30
+//        //アラート
+//        let alert: UIAlertController = UIAlertController(title: "Finish", message: "", preferredStyle: .alert)
+//        // 表示させる
+//        alert.view.tintColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1)
+//        present(alert, animated: true, completion: nil)
+//        alert.view.tintColor = .black
+//        // アラートを閉じる
+//        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+//            alert.dismiss(animated: true, completion: nil)
+//        })
+//    }
+    
+//    @objc func timerCount() {
+//        //変数を1秒減らす
+//        count -= 1
+//        timerLabel.text = String(count)
+//        //残り5,3,1秒
+//        if count == 5 || count == 3 || count == 1 {
+//            alertImage.isHidden = false
+//        } else if count == 4 || count == 2 {
+//            alertImage.isHidden = true
+//        } else {
+//            alertImage.isHidden = true
+//        }
+//        //ゲームが終了したかの確認
+//        if count == 0 {
+//            startButton.setImage(UIImage(named: "start"), for: .normal)
+//            finishGame()
+//        }
+//    }
     
 //    @IBAction func aleat(_ sender: Any) {
 //        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-//        alert.view.tintColor = .black
 //        alert.title = "新しいアイディア"
 //        alert.message = "入力"
 //        alert.addTextField(configurationHandler: {(textField) -> Void in
@@ -59,15 +118,6 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
 //                        }
 //                        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
 //                        self.addTableView.reloadData()
-//                        //スクロールするには最下部のIndexPathが必要
-//                        //IndexPathはSectionとrowの２つの要素で構成されている
-//                        //Sectionは1つしかないので0
-//                        //RowはContentsの要素数なので'self.savedItem.contents.count'または'self.contentList'から１引いた数
-//                        let section = 0
-//                        let row = self.contentList.count - 1
-//                        let indexPath = IndexPath(row: row, section: section)
-//                        //特定のCell番号(IndexPath)までスクロールしてくれるメソッド
-//                        self.addTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
 //                    }
 //                })
 //        )
@@ -103,8 +153,8 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         if indexPath.row == contentList.count - 1 {
-            //3つあるうちの最新アイテムの場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "LastCell") as! AddTableViewCell
             cell.selectionStyle = .none
             cell.ideaLabel.text = contentList[indexPath.row].content
@@ -112,8 +162,8 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
         } else {
             //最新アイテムでない場合
             let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! AddTableViewCell
-            cell.ideaLabel.text = contentList[indexPath.row].content
             cell.selectionStyle = .none
+            cell.ideaLabel.text = contentList[indexPath.row].content
             return cell
         }
     }

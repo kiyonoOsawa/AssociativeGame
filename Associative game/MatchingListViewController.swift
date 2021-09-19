@@ -18,7 +18,7 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.tintColor = UIColor(red: 0/255, green: 0/255, blue: 0/255, alpha: 1.0)
+        self.navigationController?.navigationBar.tintColor = UIColor.black
         matchTableView.rowHeight = 70
         matchTableView.register(UINib(nibName: "BananaTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         matchTableView.backgroundColor = UIColor(named: "BackColor")
@@ -40,12 +40,12 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
         matchTableView.reloadData()
     }
     
-    func moveToAddViewController(item: Item) {
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
-        vc.savedItem = item
-        self.navigationController?.pushViewController(vc, animated: true)
-    }
+//    func moveToAddViewController(item: Item) {
+//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+//        let vc = storyboard.instantiateViewController(identifier: "addVC") as! AddViewController
+//        vc.savedItem = item
+//        self.navigationController?.pushViewController(vc, animated: true)
+//    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
@@ -65,18 +65,18 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = itemList[indexPath.row]
-        if item.contents.isEmpty {
-            let alert = UIAlertController(title: "ワードが空です", message: "Banana画面からアイデアを追加しましょう", preferredStyle: .alert)
-            alert.view.tintColor = .black
-            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Banana画面へ", style: .default, handler: { _ in
-                self.moveToAddViewController(item: item)
-            }))
-            present(alert, animated: true, completion: nil)
-        } else {
-            //Itemのcontentsがあるので画面遷移が行われる
-            performSegue(withIdentifier: "matching", sender: itemList[indexPath.row])
-        }
+//        if item.contents.isEmpty {
+//            let alert = UIAlertController(title: "ワードが空です", message: "Banana画面からアイデアを追加しましょう", preferredStyle: .alert)
+//            alert.view.tintColor = .black
+//            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+//            alert.addAction(UIAlertAction(title: "Banana画面へ", style: .default, handler: { _ in
+//                self.moveToAddListViewController(item: item)
+//            }))
+//            present(alert, animated: true, completion: nil)
+//        } else {
+//            //Itemのcontentsがあるので画面遷移が行われる
+//            performSegue(withIdentifier: "matching", sender: itemList[indexPath.row])
+//        }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
