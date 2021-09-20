@@ -22,7 +22,9 @@ class StartViewController: UIViewController {
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.navigationItem.title = selectedItem.title
         let results = realm.objects(Item.self)
+        self.itemList = realm.objects(Item.self).filter("title == '\(self.selectedItem.title)'")
         let realm = try! Realm()
     }
     

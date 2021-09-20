@@ -17,5 +17,7 @@ class TabBarViewController: UITabBarController {
         UITabBar.appearance().clipsToBounds = true
         UITabBar.appearance().backgroundColor = UIColor(named: "BackColor")
         UITabBar.appearance().barTintColor = UIColor(named: "BackColor")
+        UITabBarItem.appearance().setTitleTextAttributes( [.foregroundColor : UIColor.black
+        ],for: .selected)
     }
 }

@@ -24,8 +24,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         // 画像と文字の選択時の色を指定（未選択字の色はデフォルトのまま）
-        UITabBar.appearance().tintColor = UIColor.init(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
-        //アイコンの大きさを変える
+//        UITabBar.appearance().tintColor = UIColor.black
         for item in (self.tabBarController?.tabBar.items)! {
             item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
@@ -83,7 +82,6 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         let startViewController = storyboard.instantiateViewController(identifier: "startVC") as! StartViewController
         // 値渡しを行う
         startViewController.selectedItem = item
-        // 画面遷移をする
         navigationController?.pushViewController(startViewController, animated: true)
     }
     

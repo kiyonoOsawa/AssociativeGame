@@ -29,72 +29,79 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
         //データの取得
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-        let realm = try! Realm()
+        self.addTableView.reloadData()
     }
     
-//    @IBAction func aleat(_ sender: Any) {
-//        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
-//        alert.view.tintColor = .black
-//        alert.title = "新しいアイディア"
-//        alert.message = "入力"
-//        alert.addTextField(configurationHandler: {(textField) -> Void in
-//            textField.delegate = self
-//        })
-//        //追加ボタン
-//        alert.addAction(
-//            UIAlertAction(
-//                title: "追加",
-//                style: .default,
-//                handler: {(action) -> Void in
-//                    self.hello(action.title!)
-//                    //textfieldを保存
-//                    if alert.textFields![0].text != "" {
-//                        let contents = Contents()
-//                        contents.title = self.savedItem.title
-//                        contents.content = alert.textFields![0].text
-//                        let realm = try! Realm()
-//
-//                        try! realm.write {
-//                            self.savedItem.contents.append(contents)
-//                        }
-//                        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
-//                        self.addTableView.reloadData()
-//                        //スクロールするには最下部のIndexPathが必要
-//                        //IndexPathはSectionとrowの２つの要素で構成されている
-//                        //Sectionは1つしかないので0
-//                        //RowはContentsの要素数なので'self.savedItem.contents.count'または'self.contentList'から１引いた数
-//                        let section = 0
-//                        let row = self.contentList.count - 1
-//                        let indexPath = IndexPath(row: row, section: section)
-//                        //特定のCell番号(IndexPath)までスクロールしてくれるメソッド
-//                        self.addTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-//                    }
-//                })
-//        )
-//        alert.addAction(
-//            UIAlertAction(
-//                title: "キャンセル",
-//                style: .cancel,
-//                handler: {(action) -> Void in
-//                    self.hello(action.title!)
-//                })
-//        )
-//        self.present(
-//            alert,
-//            animated: true,
-//            completion: {
-//                print("アラートが表示された")
-//            })
-//    }
-//
-//    func hello(_ msg:String){
-//        print(msg)
-//    }
+    //    @IBAction func aleat(_ sender: Any) {
+    //        let alert = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+    //        alert.view.tintColor = .black
+    //        alert.title = "新しいアイディア"
+    //        alert.message = "入力"
+    //        alert.addTextField(configurationHandler: {(textField) -> Void in
+    //            textField.delegate = self
+    //        })
+    //        //追加ボタン
+    //        alert.addAction(
+    //            UIAlertAction(
+    //                title: "追加",
+    //                style: .default,
+    //                handler: {(action) -> Void in
+    //                    self.hello(action.title!)
+    //                    //textfieldを保存
+    //                    if alert.textFields![0].text != "" {
+    //                        let contents = Contents()
+    //                        contents.title = self.savedItem.title
+    //                        contents.content = alert.textFields![0].text
+    //                        let realm = try! Realm()
+    //
+    //                        try! realm.write {
+    //                            self.savedItem.contents.append(contents)
+    //                        }
+    //                        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
+    //                        self.addTableView.reloadData()
+    //                        //スクロールするには最下部のIndexPathが必要
+    //                        //IndexPathはSectionとrowの２つの要素で構成されている
+    //                        //Sectionは1つしかないので0
+    //                        //RowはContentsの要素数なので'self.savedItem.contents.count'または'self.contentList'から１引いた数
+    //                        let section = 0
+    //                        let row = self.contentList.count - 1
+    //                        let indexPath = IndexPath(row: row, section: section)
+    //                        //特定のCell番号(IndexPath)までスクロールしてくれるメソッド
+    //                        self.addTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+    //                    }
+    //                })
+    //        )
+    //        alert.addAction(
+    //            UIAlertAction(
+    //                title: "キャンセル",
+    //                style: .cancel,
+    //                handler: {(action) -> Void in
+    //                    self.hello(action.title!)
+    //                })
+    //        )
+    //        self.present(
+    //            alert,
+    //            animated: true,
+    //            completion: {
+    //                print("アラートが表示された")
+    //            })
+    //    }
+    //
+    //    func hello(_ msg:String){
+    //        print(msg)
+    //    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let results = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
+        realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'").last
+        let section = 0
+        let row = self.contentList.count - 1
+        let indexPath = IndexPath(row: row, section: section)
+        DispatchQueue.main.async {
+            self.addTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
+       }
         addTableView.reloadData()
     }
     

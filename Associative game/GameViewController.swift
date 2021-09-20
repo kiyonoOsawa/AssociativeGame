@@ -73,7 +73,12 @@ class GameViewController: UIViewController {
         let contents = Contents()
         contents.title = self.savedItem.title
         contents.content = addTextField.text!
-        beforeLabel.text = contents.content
+        if contents.content == "" {
+            return
+        } else {
+            contents.content = addTextField.text!
+            beforeLabel.text = contents.content
+        }
         do {
             let realm = try!Realm()
             try realm.write({ () -> Void in
@@ -82,6 +87,7 @@ class GameViewController: UIViewController {
         } catch {
             print("Save is Faild")
         }
+        addTextField.text = ""
     }
     
     @IBAction func startGame() {
@@ -89,11 +95,11 @@ class GameViewController: UIViewController {
         if !timer.isValid {
             startButton.setImage(UIImage(named: "stop"), for: .normal)
             timer = Timer.scheduledTimer(
-                timeInterval: 1, //1秒ごとにselectorに処理を実行する
+                timeInterval: 1, // 1秒ごとにselectorに処理を実行する
                 target: self,
-                selector: #selector(self.timerCount), //1秒ごとに実行されるメソッドの指定
+                selector: #selector(self.timerCount), // 1秒ごとに実行されるメソッドの指定
                 userInfo: nil,
-                repeats: true  //毎秒処理を実行したいので、'repeats: true'としてあげる
+                repeats: true  // 毎秒処理を実行したいので、'repeats: true'としてあげる
             )
         } else {
             startButton.setImage(UIImage(named: "start"), for: .normal)
@@ -102,28 +108,30 @@ class GameViewController: UIViewController {
     }
         
         func finishGame() {
-            //タイマーを終了
+            // タイマーを終了
             timer.invalidate()
             count = 30
-            //アラート
+            // アラート
             let alert: UIAlertController = UIAlertController(title: "Finish", message: "", preferredStyle: .alert)
             // 表示させる
-            alert.view.tintColor = UIColor(red: 255/255, green: 222/255, blue: 0/255, alpha: 1)
+            alert.view.tintColor = UIColor.black
             present(alert, animated: true, completion: nil)
             alert.view.tintColor = .black
             // アラートを閉じる
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
                 alert.dismiss(animated: true, completion: nil)
             })
+            // タイマーをリセット
+            timerLabel.text = "30"
         }
     @objc func timerCount() {
         //変数を1秒減らす
-        count -= 1
+        count -= Int(1.0)
         timerLabel.text = String(count)
         //残り5,3,1秒
-        if count == 5 || count == 4 || count == 3 || count == 2 || count == 1 {
+        if count == 5 || count == 3 || count == 1 {
             alertImageView.isHidden = false
-        } else if count == Int(4.5) || count == Int(3.5) || count == Int(2.5) || count == Int(1.5) {
+        } else if count == 4 || count == 2 {
             alertImageView.isHidden = true
         } else {
             alertImageView.isHidden = true

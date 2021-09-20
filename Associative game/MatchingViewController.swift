@@ -129,7 +129,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
         label.text = contentList[row].content
         let custumView = UINib(nibName: "CardView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! Card
         custumView.frame.size.height = 40
-        custumView.frame.size.width = 120
+        custumView.frame.size.width = 160
         custumView.label.text = contentList[row].content
         return custumView
         return label

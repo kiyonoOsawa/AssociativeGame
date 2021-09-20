@@ -37,7 +37,7 @@ class AddViewController: UIViewController {
         listButtonItem = UIBarButtonItem(title:"List", style: .done, target: self, action: #selector(taplistButton))
         self.navigationItem.rightBarButtonItem = listButtonItem
         let results = realm.objects(Item.self)
-        self .content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title)'")
+        self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title)'")
         let realm = try! Realm()
     }
     
@@ -60,15 +60,14 @@ class AddViewController: UIViewController {
     }
     
     @IBAction func tapsaveButton(_ sender: Any) {
-        self.presentingViewController?.dismiss(animated: true, completion: nil)
         let contents = Contents()
-//        contents.title = self.savedItem.title
+        contents.title = self.savedItem.title
         contents.content = addTextField.text!
-        beforeLabel.text = contents.content
         if contents.content == "" {
-            contents.content != self.savedItem.title
+            return
         } else {
-            contents.title = self.savedItem.title
+            contents.content = addTextField.text!
+            beforeLabel.text = contents.content
         }
         do {
             let realm = try!Realm()
@@ -78,5 +77,6 @@ class AddViewController: UIViewController {
         } catch {
             print("Save is Faild")
         }
+        addTextField.text = ""
     }
 }
