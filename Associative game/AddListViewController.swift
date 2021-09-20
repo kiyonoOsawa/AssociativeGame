@@ -94,6 +94,12 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let results = realm.objects(Item.self)
+        let contents = Contents()
+        contents.title = self.savedItem.title
+        let realm = try! Realm()
+        try! realm.write {
+            self.savedItem.contents.append(contents)
+        }
         self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
         realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'").last
         let section = 0
@@ -101,7 +107,7 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
         let indexPath = IndexPath(row: row, section: section)
         DispatchQueue.main.async {
             self.addTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)
-       }
+        }
         addTableView.reloadData()
     }
     
