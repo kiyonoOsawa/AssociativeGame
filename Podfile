@@ -6,6 +6,7 @@ target 'Associative game' do
   use_frameworks!
 
   # Pods for Associative game
+
   pod 'RealmSwift'
   pod 'EAIntroView'
 
