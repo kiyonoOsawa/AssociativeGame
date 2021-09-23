@@ -33,9 +33,9 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lNB-bz-Vle">
-                                <rect key="frame" x="122" y="123" width="170" height="85"/>
+                                <rect key="frame" x="102" y="123" width="210" height="85"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="170" id="4Rc-rT-Vmd"/>
+                                    <constraint firstAttribute="width" constant="210" id="4Rc-rT-Vmd"/>
                                     <constraint firstAttribute="height" constant="85" id="CuJ-9K-x8h"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="22"/>
@@ -46,14 +46,27 @@
                                     <segue destination="7Lk-Qx-v2N" kind="presentation" modalPresentationStyle="fullScreen" id="V5U-bS-2pB"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pbb-Uj-7Kt">
+                                <rect key="frame" x="349" y="93" width="45" height="45"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="HKr-Wk-Qh0"/>
+                                    <constraint firstAttribute="width" constant="45" id="hpM-uq-SYX"/>
+                                </constraints>
+                                <state key="normal" image="navi"/>
+                                <connections>
+                                    <action selector="tapnaviButton" destination="BYZ-38-t0r" eventType="touchUpInside" id="waN-qR-h1O"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" name="BackColor"/>
                         <constraints>
                             <constraint firstItem="NuH-Bk-GLD" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="0xb-rn-QVg"/>
+                            <constraint firstItem="Pbb-Uj-7Kt" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="5" id="3cK-O8-HEV"/>
                             <constraint firstItem="lNB-bz-Vle" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="35" id="DGo-jJ-G8e"/>
                             <constraint firstItem="lNB-bz-Vle" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="FRw-QK-g8e"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="NuH-Bk-GLD" secondAttribute="trailing" constant="20" id="FW5-kF-6uT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Pbb-Uj-7Kt" secondAttribute="trailing" constant="20" id="P7T-Yh-RIk"/>
                             <constraint firstItem="NuH-Bk-GLD" firstAttribute="top" secondItem="lNB-bz-Vle" secondAttribute="bottom" constant="35" id="llc-cm-SfP"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="NuH-Bk-GLD" secondAttribute="bottom" id="paC-xq-ULp"/>
                         </constraints>
@@ -61,6 +74,7 @@
                     <tabBarItem key="tabBarItem" title="BANANA" image="banana" selectedImage="select_banana" id="uhC-9f-L4X"/>
                     <navigationItem key="navigationItem" id="2S3-S6-XLr"/>
                     <connections>
+                        <outlet property="naviButton" destination="Pbb-Uj-7Kt" id="AOH-7v-CU7"/>
                         <outlet property="newbutton" destination="lNB-bz-Vle" id="iGK-X8-YY2"/>
                         <outlet property="savetableview" destination="NuH-Bk-GLD" id="AEQ-CH-qR2"/>
                     </connections>
@@ -1281,6 +1295,7 @@
         <image name="matching" width="309" height="309"/>
         <image name="matching_image" width="1559" height="751"/>
         <image name="matchinglist" width="308" height="309"/>
+        <image name="navi" width="751" height="751"/>
         <image name="pop" width="361" height="231"/>
         <image name="results_back" width="251" height="86"/>
         <image name="save" width="335" height="51"/>

@@ -12,6 +12,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     @IBOutlet var newbutton: UIButton!
     @IBOutlet var savetableview: UITableView!
+    @IBOutlet var naviButton: UIButton!
     var itemList: Results<Item>!
     var contentList: Results<Contents>!
     var maxId: String{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? ""}
@@ -47,6 +48,13 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         self.itemList = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self)
         savetableview.reloadData()
+    }
+    
+    @IBAction func tapnaviButton() {
+        DispatchQueue.main.async {
+            let FirstViewController = FirstViewController.init()
+            self.present(FirstViewController, animated: true, completion: nil)
+        }
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

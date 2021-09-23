@@ -24,12 +24,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
             ud.set(false, forKey: firstLunchKey)
             ud.synchronize()
             let window = UIWindow(windowScene: windowScene)
-            window.rootViewController = BananaViewController()
+            window.rootViewController = FirstViewController()
             self.window = window
             window.makeKeyAndVisible()
         } else {
-            let window = UIWindow(frame: UIScreen.main.bounds)
-            window.rootViewController = UINavigationController(rootViewController: FirstViewController())
+            let window = UIWindow(windowScene: windowScene)
+            // Main.storyboardの一番最初に表示される画面を表示する
+            let initialViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+            window.rootViewController = initialViewController
             self.window = window
             window.makeKeyAndVisible()
         }
