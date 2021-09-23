@@ -39,6 +39,10 @@ class AddViewController: UIViewController {
         let results = realm.objects(Item.self)
         self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title)'")
         let realm = try! Realm()
+        let tapCG: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapCG.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapCG)
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,10 +51,8 @@ class AddViewController: UIViewController {
         self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // キーボードを閉じる
-        addTextField.resignFirstResponder()
-        return true
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     @objc func taplistButton() {
@@ -72,7 +74,7 @@ class AddViewController: UIViewController {
         do {
             let realm = try!Realm()
             try realm.write({ () -> Void in
-                realm.add(contents)
+                self.savedItem.contents.append(contents)
             })
         } catch {
             print("Save is Faild")

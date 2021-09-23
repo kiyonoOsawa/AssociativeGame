@@ -28,7 +28,7 @@ class GameViewController: UIViewController {
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.tintColor = UIColor.black
-        self.timerLabel.layer.cornerRadius = 38
+        self.timerLabel.layer.cornerRadius = 30
         self.timerLabel.clipsToBounds = true
         self.timerLabel.layer.borderWidth = 2
         self.timerLabel.layer.borderColor = UIColor.gray.cgColor
@@ -48,6 +48,9 @@ class GameViewController: UIViewController {
         let results = realm.objects(Item.self)
         self .content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title)'")
         let realm = try! Realm()
+        let tapCG: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapCG.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapCG)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -56,10 +59,8 @@ class GameViewController: UIViewController {
         self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
     }
     
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        // キーボードを閉じる
-        addTextField.resignFirstResponder()
-        return true
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     @objc func taplistButton() {
@@ -82,7 +83,7 @@ class GameViewController: UIViewController {
         do {
             let realm = try!Realm()
             try realm.write({ () -> Void in
-                realm.add(contents)
+                self.savedItem.contents.append(contents)
             })
         } catch {
             print("Save is Faild")
@@ -106,24 +107,24 @@ class GameViewController: UIViewController {
             finishGame()
         }
     }
-        
-        func finishGame() {
-            // タイマーを終了
-            timer.invalidate()
-            count = 30
-            // アラート
-            let alert: UIAlertController = UIAlertController(title: "Finish", message: "", preferredStyle: .alert)
-            // 表示させる
-            alert.view.tintColor = UIColor.black
-            present(alert, animated: true, completion: nil)
-            alert.view.tintColor = .black
-            // アラートを閉じる
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
-                alert.dismiss(animated: true, completion: nil)
-            })
-            // タイマーをリセット
-            timerLabel.text = "30"
-        }
+    
+    func finishGame() {
+        // タイマーを終了
+        timer.invalidate()
+        count = 30
+        // アラート
+        let alert: UIAlertController = UIAlertController(title: "Finish", message: "", preferredStyle: .alert)
+        // 表示させる
+        alert.view.tintColor = UIColor.black
+        present(alert, animated: true, completion: nil)
+        alert.view.tintColor = .black
+        // アラートを閉じる
+        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0, execute: {
+            alert.dismiss(animated: true, completion: nil)
+        })
+        // タイマーラベルに30を表示
+        timerLabel.text = "30"
+    }
     @objc func timerCount() {
         //変数を1秒減らす
         count -= Int(1.0)

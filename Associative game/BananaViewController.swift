@@ -20,11 +20,8 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        //navigationBarを透明にする
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
-        // 画像と文字の選択時の色を指定（未選択字の色はデフォルトのまま）
-//        UITabBar.appearance().tintColor = UIColor.black
         for item in (self.tabBarController?.tabBar.items)! {
             item.imageInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         }
@@ -41,13 +38,12 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
             print("アイテム")
             print(itemList)
             savetableview.reloadData()
-        }catch{
+        } catch {
         }
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //データの取得
         self.itemList = realm.objects(Item.self)
         self.contentList = realm.objects(Contents.self)
         savetableview.reloadData()
@@ -80,7 +76,6 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         let item = itemList[indexPath.row]
         // StartViewControllerの生成
         let startViewController = storyboard.instantiateViewController(identifier: "startVC") as! StartViewController
-        // 値渡しを行う
         startViewController.selectedItem = item
         navigationController?.pushViewController(startViewController, animated: true)
     }
@@ -105,7 +100,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
                     realm.delete(item)
                 }
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
-            }catch{
+            } catch {
             }
             tableView.reloadData()
         }

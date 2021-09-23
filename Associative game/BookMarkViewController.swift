@@ -27,7 +27,6 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //全てのデータを取得
         self.favoriteArray = Array(realm.objects(MatchingPair.self).filter("IsFavorite == true"))
         //for文を使ってIsFavoriteがtrueでなはないMatchingPairを配列から削除する
         for index in 0 ..< favoriteArray.count {
@@ -43,7 +42,6 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectMatchingPair = favoriteArray[indexPath.row]
         if selectMatchingPair.IsFavorite == true {
-            // realmの元のデータを書き換えるからrealm.writeで囲む
             try! realm.write {
                 selectMatchingPair.IsFavorite = false
             }
@@ -59,7 +57,6 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") as! BookMarkTableViewCell
         cell.selectionStyle = .none
-
         cell.datatextLabel.text = favoriteArray[indexPath.row].pair1!
         cell.ideatextLabel.text = favoriteArray[indexPath.row].pair2
         let selectMatchingPair = favoriteArray[indexPath.row]

@@ -14,5 +14,4 @@ class MatchingPair: Object {
     @objc dynamic var pair1: String? = nil // ランダムに選択したコンテンツ
     @objc dynamic var pair2: String? = nil // ピッカーから選択したコンテンツ
     @objc dynamic var IsFavorite: Bool = true
-    // trueのときBookMarkに表示,falseのときとtrueのときはlisetに表示
 }

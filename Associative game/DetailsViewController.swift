@@ -46,9 +46,11 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
         // selectImageIconの角丸
         self.selectImageIcon.layer.cornerRadius = 10
         self.selectImageIcon.layer.masksToBounds = true
+        let tapCG: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapCG.cancelsTouchesInView = false
+        self.view.addGestureRecognizer(tapCG)
     }
     
-    //画面をタップした時に呼ばれるメソッド
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         topImageView.isHidden = false
@@ -69,6 +71,10 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
         } catch {
             print("Save is Faild")
         }
+    }
+    
+    @objc func dismissKeyboard() {
+        self.view.endEditing(true)
     }
     
     @IBAction func cancelButton(_ sender: UIButton) {
