@@ -39,6 +39,9 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
         realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'").last
         let section = 0
         let row = self.contentList.count - 1
+        if row == -1 {
+            return
+        }
         let indexPath = IndexPath(row: row, section: section)
         DispatchQueue.main.async {
             self.addTableView.scrollToRow(at: indexPath, at: .bottom, animated: true)

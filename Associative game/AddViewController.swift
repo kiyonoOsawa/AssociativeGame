@@ -36,12 +36,18 @@ class AddViewController: UIViewController {
         self.navigationItem.title = savedItem.title
         listButtonItem = UIBarButtonItem(title:"List", style: .done, target: self, action: #selector(taplistButton))
         self.navigationItem.rightBarButtonItem = listButtonItem
+        if savedItem.contents.isEmpty {
+            beforeLabel.text = savedItem.title
+        } else {
+            beforeLabel.text = savedItem.contents.last?.content
+        }
         let results = realm.objects(Item.self)
         self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title)'")
         let realm = try! Realm()
         let tapCG: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapCG.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapCG)
+        addTextField.becomeFirstResponder()
         
     }
     
@@ -80,5 +86,6 @@ class AddViewController: UIViewController {
             print("Save is Faild")
         }
         addTextField.text = ""
+        addTextField.becomeFirstResponder()
     }
 }

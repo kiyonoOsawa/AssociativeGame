@@ -66,10 +66,10 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let item = itemList[indexPath.row]
         if item.contents.isEmpty {
-            let alert = UIAlertController(title: "ワードが空です", message: "Banana画面からアイデアを追加しましょう", preferredStyle: .alert)
+            let alert = UIAlertController(title: "ワードが空です", message: "追加画面からアイデアを追加しましょう", preferredStyle: .alert)
             alert.view.tintColor = .black
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-            alert.addAction(UIAlertAction(title: "Banana画面へ", style: .default, handler: { _ in
+            alert.addAction(UIAlertAction(title: "追加画面へ", style: .default, handler: { _ in
                 self.moveToAddViewController(item: item)
             }))
             present(alert, animated: true, completion: nil)
