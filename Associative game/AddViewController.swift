@@ -14,6 +14,7 @@ class AddViewController: UIViewController {
     @IBOutlet var addTextField: UITextField!
     @IBOutlet var saveButton: UIButton!
     var listButtonItem: UIBarButtonItem!
+    var backButtonItem: UIBarButtonItem!
     var savedItem: Item!
     var content: Results<Contents>!
     let realm = try! Realm()
@@ -53,8 +54,14 @@ class AddViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if savedItem.contents.isEmpty {
+            beforeLabel.text = savedItem.title
+        } else {
+            beforeLabel.text = savedItem.contents.last?.content
+        }
         let results = realm.objects(Item.self)
         self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
+        
     }
     
     @objc func dismissKeyboard() {

@@ -61,6 +61,11 @@ class GameViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        if savedItem.contents.isEmpty {
+            beforeLabel.text = savedItem.title
+        } else {
+            beforeLabel.text = savedItem.contents.last?.content
+        }
         let results = realm.objects(Item.self)
         self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
     }
