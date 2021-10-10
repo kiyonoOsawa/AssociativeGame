@@ -29,11 +29,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ud.register(defaults: firstLunch)
         
         let config = Realm.Configuration(
-            schemaVersion: 13,
+            schemaVersion: 14,
             migrationBlock: { migration, oldSchemaVersion in
-                if (oldSchemaVersion < 1) {}
+                if (oldSchemaVersion < 14) {
+                    migration.enumerateObjects(ofType: "Contents") { oldObject, newObject in
+                        let realm = try! Realm()
+                        guard let item = realm.objects(Item.self).filter("title == \(oldObject!["title"]!)").first else {
+                            return
+                        }
+                        newObject!["itemId"] = item.id
+                    }
+                }
             })
         Realm.Configuration.defaultConfiguration = config
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = UIColor(named: "BackColor")
+        UINavigationBar.appearance().standardAppearance = appearance
+        UINavigationBar.appearance().scrollEdgeAppearance = appearance
         return true
     }
     

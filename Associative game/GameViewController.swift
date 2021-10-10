@@ -50,8 +50,6 @@ class GameViewController: UIViewController {
         } else {
             beforeLabel.text = savedItem.contents.last?.content
         }
-        let results = realm.objects(Item.self)
-        self .content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title)'")
         let realm = try! Realm()
         let tapCG: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapCG.cancelsTouchesInView = false
@@ -83,6 +81,7 @@ class GameViewController: UIViewController {
     @IBAction func tapsaveButton(_ sender: Any) {
         self.presentingViewController?.dismiss(animated: true, completion: nil)
         let contents = Contents()
+        contents.itemId = self.savedItem.id
         contents.title = self.savedItem.title
         contents.content = addTextField.text!
         if contents.content == "" {

@@ -24,8 +24,6 @@ class GameListViewController: UIViewController,UITableViewDataSource,UITextField
         addTableView.tableFooterView = UIView()
         addTableView.dataSource = self
         addTableView.delegate = self
-//        let results = realm.objects(Item.self)
-//        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
         let realm = try! Realm()
         self.navigationItem.title = savedItem.title
     }
@@ -33,7 +31,7 @@ class GameListViewController: UIViewController,UITableViewDataSource,UITextField
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         let results = realm.objects(Item.self)
-        self.contentList = realm.objects(Contents.self).filter("id == '\(self.savedItem.title!)'")
+        self.contentList = realm.objects(Contents.self).filter("itemId == '\(self.savedItem.id)'")
         realm.objects(Contents.self).filter("title == '\(self.savedItem.title)'").last
         let section = 0
         let row = self.contentList.count - 1

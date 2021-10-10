@@ -42,8 +42,6 @@ class AddViewController: UIViewController {
         } else {
             beforeLabel.text = savedItem.contents.last?.content
         }
-        let results = realm.objects(Item.self)
-        self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title)'")
         let realm = try! Realm()
         let tapCG: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapCG.cancelsTouchesInView = false
@@ -76,6 +74,7 @@ class AddViewController: UIViewController {
     
     @IBAction func tapsaveButton(_ sender: Any) {
         let contents = Contents()
+        contents.itemId = self.savedItem.id
         contents.title = self.savedItem.title
         contents.content = addTextField.text!
         if contents.content == "" {

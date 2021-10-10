@@ -16,7 +16,6 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
     let realm = try! Realm()
     var savedItem: Item!
     var contentsArray = Array<Any>()
-    var maxId: String{return try!Realm().objects(Item.self).sorted(byKeyPath: "id").last?.id ?? ""}
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,15 +28,12 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
         self.navigationItem.title = savedItem.title
         //データの取得
         let results = realm.objects(Item.self)
-        self.contentList = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
+        self.contentList = realm.objects(Contents.self).filter("itemId == '\(self.savedItem.id)'")
         self.addTableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        let results = realm.objects(Item.self)
-//        self.savedItem = realm.objects(Item.self)
-        self.contentList = realm.objects(Contents.self).filter("id == '\(self.savedItem.id)'")
         realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'").last
         let section = 0
         let row = self.contentList.count - 1

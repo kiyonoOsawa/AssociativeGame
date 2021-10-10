@@ -26,6 +26,7 @@ class Item: Object {
 
 class Contents: Object {
     // class Peace
+    @objc dynamic var itemId: String?
     @objc dynamic var title: String? = nil
     @objc dynamic var content: String? = nil
 }
