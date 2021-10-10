@@ -46,6 +46,9 @@ class BookMarkViewController: UIViewController, UITableViewDataSource,UITableVie
                 selectMatchingPair.IsFavorite = false
             }
         } else {
+            try! realm.write {
+                selectMatchingPair.IsFavorite = true
+            }
         }
         tableView.reloadData()
     }
