@@ -11,7 +11,7 @@ import RealmSwift
 
 class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldDelegate, UITableViewDelegate {
     
-    @IBOutlet var addTableView: UITableView!
+    @IBOutlet weak var addTableView: UITableView!
     var contentList: Results<Contents>!
     let realm = try! Realm()
     var savedItem: Item!
@@ -19,17 +19,21 @@ class AddListViewController: UIViewController,UITableViewDataSource,UITextFieldD
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        //データの取得
+        let results = realm.objects(Item.self)
+        self.contentList = realm.objects(Contents.self).filter("itemId == '\(self.savedItem.id)'")
+        self.addTableView.reloadData()
+        designImage()
+    }
+    
+    func designImage() {
         self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.navigationItem.title = savedItem.title
         addTableView.rowHeight = 70
         addTableView.backgroundColor = UIColor(named: "BackColor")
         addTableView.tableFooterView = UIView()
         addTableView.dataSource = self
         addTableView.delegate = self
-        self.navigationItem.title = savedItem.title
-        //データの取得
-        let results = realm.objects(Item.self)
-        self.contentList = realm.objects(Contents.self).filter("itemId == '\(self.savedItem.id)'")
-        self.addTableView.reloadData()
     }
     
     override func viewWillAppear(_ animated: Bool) {

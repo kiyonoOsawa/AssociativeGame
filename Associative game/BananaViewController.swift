@@ -8,9 +8,9 @@
 import UIKit
 import RealmSwift
 
-class BananaViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate {
+class BananaViewController: UIViewController, UITextFieldDelegate { //UITableViewDataSource, UITableViewDelegate,
     
-    @IBOutlet var newbutton: UIButton!
+    @IBOutlet weak var newbutton: UIButton!
     @IBOutlet var savetableview: UITableView!
     @IBOutlet var naviButton: UIButton!
     var itemList: Results<Item>!
@@ -41,6 +41,7 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
             savetableview.reloadData()
         } catch {
         }
+        designImage()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,13 +51,23 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         savetableview.reloadData()
     }
     
+    func designImage() {
+        newbutton.layer.cornerRadius = 15
+        newbutton.layer.shadowColor = UIColor.gray.cgColor
+        newbutton.layer.shadowOpacity = 0.5
+        newbutton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        newbutton.layer.masksToBounds = false
+    }
+    
     @IBAction func tapnaviButton() {
         DispatchQueue.main.async {
             let FirstViewController = FirstViewController.init()
             self.present(FirstViewController, animated: true, completion: nil)
         }
     }
-    
+}
+
+extension BananaViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return itemList.count
     }
@@ -67,12 +78,13 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
         // セルの選択状態
         cell.selectionStyle = .none
         cell.titletextLabel.text = itemList[indexPath.row].title
-        // >マーク
-        cell.accessoryType = UITableViewCell.AccessoryType.disclosureIndicator
         // icon
         let icon = UIImage(data: itemList[indexPath.row].icon ?? Data())
         cell.iconImageView.image = icon
         cell.backgroundColor = UIColor(named: "BackColor")
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        cell.datetextLabel?.text = dateFormatter.string(from: itemList[indexPath.row].date ?? Date())
         print(itemList[indexPath.row].title)
         return cell
     }
@@ -93,7 +105,6 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
-        
         if editingStyle == UITableViewCell.EditingStyle.delete {
             do{
                 let realm = try! Realm()
@@ -110,7 +121,6 @@ class BananaViewController: UIViewController, UITableViewDataSource, UITableView
                 tableView.deleteRows(at: [indexPath], with: UITableView.RowAnimation.fade)
             } catch {
             }
-            tableView.reloadData()
         }
     }
-}
+    }

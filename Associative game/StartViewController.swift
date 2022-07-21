@@ -10,8 +10,8 @@ import RealmSwift
 
 class StartViewController: UIViewController {
     
-    @IBOutlet var listButton: UIButton!
-    @IBOutlet var starButton: UIButton!
+    @IBOutlet weak var listButton: UIButton!
+    @IBOutlet weak var starButton: UIButton!
     var selectedItem: Item!
     var savedItem: Item!
     var itemList: Results<Item>!
@@ -26,6 +26,20 @@ class StartViewController: UIViewController {
         let results = realm.objects(Item.self)
         self.itemList = realm.objects(Item.self).filter("title == '\(self.selectedItem.title)'")
         let realm = try! Realm()
+        designImage()
+    }
+    
+    func designImage() {
+        listButton.layer.cornerRadius = 15
+        listButton.layer.shadowOpacity = 0.5
+        listButton.layer.shadowColor = UIColor.black.cgColor
+        listButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        listButton.layer.masksToBounds = false
+        starButton.layer.cornerRadius = 15
+        starButton.layer.shadowOpacity = 0.5
+        starButton.layer.shadowColor = UIColor.black.cgColor
+        starButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        starButton.layer.masksToBounds = false
     }
     
     @IBAction func tapStartButton() {

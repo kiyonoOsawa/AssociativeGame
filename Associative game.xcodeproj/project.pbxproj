@@ -191,7 +191,6 @@
 				6C6AE4D426F62BA600668140 /* AddViewController.swift */,
 				6C9CEF2425B412170028C3D5 /* AppDelegate.swift */,
 				6C1274B726DB75810056A159 /* BananaTableViewCell.swift */,
-				6C7F92F525C7C0F000524274 /* BananaViewController.swift */,
 				6C5ABFA026B658C300649692 /* BookMarkTableViewCell.swift */,
 				6C9DA8DB26FCBA5F0024D1B2 /* FirstViewController.swift */,
 				6C5ABF9B26B63C8A00649692 /* BookMarkViewController.swift */,
@@ -213,6 +212,7 @@
 				6C48449626DD1729004A95A9 /* TableViewCell.swift */,
 				6C9CEF2825B412170028C3D5 /* ViewController.swift */,
 				6CD522F8265A1A0E00308CB4 /* Assets.xcassets */,
+				6C7F92F525C7C0F000524274 /* BananaViewController.swift */,
 				6C1274B226DB75060056A159 /* BananaTableViewCell.xib */,
 				6C5ABFA126B658C300649692 /* BookMarkTableViewCell.xib */,
 				6C4844A126DD1A6A004A95A9 /* CardView.xib */,
@@ -698,13 +698,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7Y5RBD24LU;
 				INFOPLIST_FILE = "Associative game/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "app.osawa.kiyo.Associative-game";
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.osawa.kiyono.Magical-Banana";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -718,13 +720,15 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = 7Y5RBD24LU;
 				INFOPLIST_FILE = "Associative game/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "app.osawa.kiyo.Associative-game";
+				MARKETING_VERSION = 1.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = "app.osawa.kiyono.Magical-Banana";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -737,7 +741,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7Y5RBD24LU;
 				INFOPLIST_FILE = "Associative gameTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -759,7 +765,9 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7Y5RBD24LU;
 				INFOPLIST_FILE = "Associative gameTests/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 14.2;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -781,6 +789,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7Y5RBD24LU;
 				INFOPLIST_FILE = "Associative gameUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -801,6 +810,7 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 7Y5RBD24LU;
 				INFOPLIST_FILE = "Associative gameUITests/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

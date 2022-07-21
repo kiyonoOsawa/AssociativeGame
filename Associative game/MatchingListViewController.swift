@@ -60,6 +60,10 @@ class MatchingListViewController: UIViewController,UITableViewDataSource, UITabl
         let object = itemList[indexPath.row]
         let icon = UIImage(data: itemList[indexPath.row].icon ?? Data())
         cell.iconImageView.image = icon
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        cell.datetextLabel?.text = dateFormatter.string(from: itemList[indexPath.row].date ?? Date())
+        print(itemList[indexPath.row].title)
         return cell
     }
     

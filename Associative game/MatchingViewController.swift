@@ -13,8 +13,9 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     @IBOutlet var ideaLabel: UILabel!
     @IBOutlet var matchingList: UITableView!
     @IBOutlet var matchPick: UIPickerView!
-    @IBOutlet var stockButton: UIButton!
+    @IBOutlet weak var stockButton: UIButton!
     
+    //    var viewWidth: CGFloat = 0.0
     var fontArray = ["System Medium"]
     var randomContent: Contents!
     var item: Item!
@@ -26,6 +27,7 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.tintColor = UIColor.black
+        //        viewWidth = view.frame.width
         matchingList.rowHeight = 70
         matchingList.register(UINib(nibName: "BookMarkTableViewCell", bundle: nil), forCellReuseIdentifier: "Cell")
         matchingList.backgroundColor = UIColor(named: "BackColor")
@@ -40,6 +42,15 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
             randomContent = item.contents.randomElement()!
             ideaLabel.text = randomContent.content
         }
+        designImage()
+    }
+    
+    func designImage() {
+        stockButton.layer.cornerRadius = 10
+        stockButton.layer.shadowOpacity = 0.2
+        stockButton.layer.shadowColor = UIColor.black.cgColor
+        stockButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        stockButton.layer.masksToBounds = false
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -123,15 +134,17 @@ class MatchingViewController: UIViewController, UITabBarDelegate, UITableViewDat
     
     //pickerviewに表示する独自のビューを設定する
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 40))
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: 50))
         label.textAlignment = .center
-        label.font = UIFont.systemFont(ofSize: 20, weight: .medium)
+        label.font = UIFont.systemFont(ofSize: 22, weight: .medium)
         label.text = contentList[row].content
-        let custumView = UINib(nibName: "CardView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! Card
-        custumView.frame.size.height = 40
-        custumView.frame.size.width = 160
-        custumView.label.text = contentList[row].content
-        return custumView
+//        let custumView = UINib(nibName: "CardView", bundle: nil).instantiate(withOwner: nil, options: nil).first as! Card
+        //        let viewWidth: CGFloat = 100
+//        let viewHeight: CGFloat = 40
+        //        custumView.frame.size.width = matchPick.widthAnchor
+        //        custumView.label.text = contentList[row].content
+        //        return CGSize(width: viewWidth, height: viewHeight)
+//        return custumView
         return label
     }
     

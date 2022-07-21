@@ -10,9 +10,9 @@ import RealmSwift
 
 class AddViewController: UIViewController {
     
-    @IBOutlet var beforeLabel: UILabel!
-    @IBOutlet var addTextField: UITextField!
-    @IBOutlet var saveButton: UIButton!
+    @IBOutlet weak var beforeLabel: UILabel!
+    @IBOutlet weak var addTextField: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
     var listButtonItem: UIBarButtonItem!
     var backButtonItem: UIBarButtonItem!
     var savedItem: Item!
@@ -24,16 +24,6 @@ class AddViewController: UIViewController {
         self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
         self.navigationController!.navigationBar.shadowImage = UIImage()
         self.navigationController?.navigationBar.tintColor = UIColor.black
-        let border = CALayer()
-        let width = CGFloat(2.0)
-        border.borderColor = UIColor.black.cgColor
-        border.frame = CGRect(x: 0, y: addTextField.frame.size.height - width, width: addTextField.frame.size.width, height: 1)
-        border.borderWidth = width
-        addTextField.placeholder = " Word"
-        addTextField.layer.addSublayer(border)
-        beforeLabel.layer.cornerRadius = 15
-        beforeLabel.layer.borderColor = UIColor.black.cgColor
-        beforeLabel.layer.borderWidth = 1
         self.navigationItem.title = savedItem.title
         listButtonItem = UIBarButtonItem(title:"List", style: .done, target: self, action: #selector(taplistButton))
         self.navigationItem.rightBarButtonItem = listButtonItem
@@ -47,7 +37,26 @@ class AddViewController: UIViewController {
         tapCG.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapCG)
         addTextField.becomeFirstResponder()
+        designImage()
         
+    }
+    
+    func designImage() {
+        saveButton.layer.shadowOpacity = 0.2
+        saveButton.layer.shadowColor = UIColor.black.cgColor
+        saveButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        saveButton.layer.masksToBounds = false
+        saveButton.layer.cornerRadius = 15
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.black.cgColor
+        border.frame = CGRect(x: 0, y: addTextField.frame.size.height - width, width: addTextField.frame.size.width, height: 1)
+        border.borderWidth = width
+        addTextField.placeholder = " Word"
+        addTextField.layer.addSublayer(border)
+        beforeLabel.layer.cornerRadius = 15
+        beforeLabel.layer.borderColor = UIColor.black.cgColor
+        beforeLabel.layer.borderWidth = 1
     }
     
     override func viewWillAppear(_ animated: Bool) {

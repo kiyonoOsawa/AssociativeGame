@@ -14,6 +14,7 @@ class Item: Object {
     @objc dynamic var title: String? = nil
     @objc dynamic var timer: Bool = false
     @objc dynamic var icon: Data? = nil
+    @objc dynamic var date: Date? = nil
     let contents = List<Contents>()
     
     override static func primaryKey() -> String? {

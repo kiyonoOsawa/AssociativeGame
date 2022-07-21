@@ -10,12 +10,12 @@ import RealmSwift
 
 class GameViewController: UIViewController {
     
-    @IBOutlet var beforeLabel: UILabel!
-    @IBOutlet var addTextField: UITextField!
-    @IBOutlet var saveButton: UIButton!
-    @IBOutlet var timerLabel: UILabel!
-    @IBOutlet var startButton: UIButton!
-    @IBOutlet var alertImageView: UIImageView!
+    @IBOutlet weak var beforeLabel: UILabel!
+    @IBOutlet weak var addTextField: UITextField!
+    @IBOutlet weak var saveButton: UIButton!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var startButton: UIButton!
+    @IBOutlet weak var alertImageView: UIImageView!
     var listButtonItem: UIBarButtonItem!
     var timer: Timer = Timer()
     var count: Int = 30
@@ -25,23 +25,11 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        self.navigationController!.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.tintColor = UIColor.black
-        self.timerLabel.layer.cornerRadius = 30
-        self.timerLabel.clipsToBounds = true
-        self.timerLabel.layer.borderWidth = 2
-        self.timerLabel.layer.borderColor = UIColor.gray.cgColor
         let border = CALayer()
         let width = CGFloat(2.0)
         border.borderColor = UIColor.black.cgColor
         border.frame = CGRect(x: 0, y: addTextField.frame.size.height - width, width: addTextField.frame.size.width, height: 1)
         border.borderWidth = width
-        addTextField.placeholder = " Word"
-        addTextField.layer.addSublayer(border)
-        beforeLabel.layer.cornerRadius = 15
-        beforeLabel.layer.borderColor = UIColor.black.cgColor
-        beforeLabel.layer.borderWidth = 1
         self.navigationItem.title = savedItem.title
         listButtonItem = UIBarButtonItem(title:"List", style: .done, target: self, action: #selector(taplistButton))
         self.navigationItem.rightBarButtonItem = listButtonItem
@@ -66,6 +54,32 @@ class GameViewController: UIViewController {
         }
         let results = realm.objects(Item.self)
         self.content = realm.objects(Contents.self).filter("title == '\(self.savedItem.title!)'")
+        designImage()
+    }
+    
+    func designImage() {
+        self.navigationController!.navigationBar.setBackgroundImage(UIImage(), for: .default)
+        self.navigationController!.navigationBar.shadowImage = UIImage()
+        self.navigationController?.navigationBar.tintColor = UIColor.black
+        self.timerLabel.layer.cornerRadius = 30
+        self.timerLabel.clipsToBounds = true
+        self.timerLabel.layer.borderWidth = 2
+        self.timerLabel.layer.borderColor = UIColor.gray.cgColor
+        saveButton.layer.shadowOpacity = 0.2
+        saveButton.layer.shadowColor = UIColor.black.cgColor
+        saveButton.layer.shadowOffset = CGSize(width: 0, height: 0)
+        saveButton.layer.masksToBounds = false
+        saveButton.layer.cornerRadius = 15
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.black.cgColor
+        border.frame = CGRect(x: 0, y: addTextField.frame.size.height - width, width: addTextField.frame.size.width, height: 1)
+        border.borderWidth = width
+        addTextField.placeholder = " Word"
+        addTextField.layer.addSublayer(border)
+        beforeLabel.layer.cornerRadius = 15
+        beforeLabel.layer.borderColor = UIColor.black.cgColor
+        beforeLabel.layer.borderWidth = 1
     }
     
     @objc func dismissKeyboard() {

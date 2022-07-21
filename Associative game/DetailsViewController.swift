@@ -10,13 +10,13 @@ import RealmSwift
 
 class DetailsViewController: UIViewController, UIImagePickerControllerDelegate & UINavigationControllerDelegate {
     
-    @IBOutlet var titleTextField: UITextField!
-    @IBOutlet var timerSwitch: UISwitch!
-    @IBOutlet var topImageView: UIImageView!
-    @IBOutlet var imageGroupView: UIView!
-    @IBOutlet var popImageView: UIImageView!
+    @IBOutlet weak var titleTextField: UITextField!
+    @IBOutlet weak var timerSwitch: UISwitch!
+//    @IBOutlet weak var topImageView: UIButton!
+    @IBOutlet weak var imageGroupView: UIView!
+    @IBOutlet weak var popImageView: UIImageView!
     @IBOutlet var libraryButton: UIButton!     //ライブラリから選ぶためのbutton
-    @IBOutlet var selectImageIcon: UIButton!    //今選んでいる画像が表示されるbutton
+    @IBOutlet weak var selectImageIcon: UIButton!    //今選んでいる画像が表示されるbutton
     @IBOutlet var firstIcon: UIButton!
     @IBOutlet var secondIcon: UIButton!
     @IBOutlet var thirdIcon: UIButton!
@@ -36,33 +36,49 @@ class DetailsViewController: UIViewController, UIImagePickerControllerDelegate &
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        titleTextField.layer.cornerRadius = 7
-        titleTextField.layer.borderColor = CGColor(red: 15/255, green: 37/255, blue: 64/255, alpha: 1.0)
-        titleTextField.layer.borderWidth = 0.6
-        //吹き出しの角丸
-        self.popImageView.layer.cornerRadius = 25
         //吹き出しを隠す
         imageGroupView.isHidden = true
         // selectImageIconの角丸
-        self.selectImageIcon.layer.cornerRadius = 10
-        self.selectImageIcon.layer.masksToBounds = true
         let tapCG: UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapCG.cancelsTouchesInView = false
         self.view.addGestureRecognizer(tapCG)
+        designImage()
+    }
+    
+    func designImage() {
+        selectImageIcon.layer.cornerRadius = 10
+        selectImageIcon.layer.borderColor = UIColor.black.cgColor
+        selectImageIcon.layer.borderWidth = 1
+        titleTextField.layer.cornerRadius = 10
+        titleTextField.layer.borderColor = UIColor.black.cgColor
+        titleTextField.layer.borderWidth = 0.6
+        //吹き出しの角丸
+        self.popImageView.layer.cornerRadius = 25
+        self.selectImageIcon.layer.cornerRadius = 10
+        self.selectImageIcon.layer.masksToBounds = true
+        let leftPadding = UIView(frame: CGRect(x: 0, y: 0, width: 10, height: 0))
+        titleTextField.leftView = leftPadding
+        titleTextField.leftViewMode = .always
+        titleTextField.placeholder = "New Project"
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
-        topImageView.isHidden = false
         imageGroupView.isHidden = true
     }
     
     @IBAction func saveButton(_ sender: UIButton) {
         self.presentingViewController?.dismiss(animated: true, completion: nil)
         let item = Item()
+        let dt = Date()
         item.title = titleTextField.text!
         item.timer = timerSwitch.isOn
         item.icon = selectImageIcon.currentImage?.pngData()
+        item.date = dt
+//        dateFormatter.locale = Locale(identifier: "ja_JP")
+//        dateFormatter.dateStyle = .medium
+        
+
         do{
             let realm = try! Realm()
             try realm.write({ () -> Void in

@@ -10,6 +10,7 @@ import UIKit
 class BananaTableViewCell: UITableViewCell {
     
     @IBOutlet var titletextLabel: UILabel!
+    @IBOutlet var datetextLabel: UILabel!
     @IBOutlet var iconImageView: UIImageView!
     
     override func awakeFromNib() {
